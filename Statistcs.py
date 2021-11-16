@@ -1,0 +1,3 @@
+
+
+coef = ols.stats()
