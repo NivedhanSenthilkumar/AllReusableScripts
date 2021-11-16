@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Apr 30 11:25:24 2021
-@author: nived
-"""
-
+                           "Predictive Power Score"
+pps.predictors(train_df, "Overall_Experience")[['x', 'y', 'ppscore']]
 
                        ""Feature importance""
 # logistic regression for feature importance
