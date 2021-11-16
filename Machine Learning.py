@@ -121,7 +121,7 @@ pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
 
 
-'                              2-FEATURE SELECTION'
+                              '2-FEATURE SELECTION'
 #FORWARD SELECTION
 #VERSION1
 from sklearn.feature_selection import SequentialFeatureSelector
@@ -167,7 +167,7 @@ print(sfs_backward.k_feature_names_)
 print('\nR-Squared: ', sfs_backward.k_score_)
 
 
-##RECURSIVE FEATURE ELIMINATION
+                      '3-RECURSIVE FEATURE ELIMINATION'
 linreg_rfe = LinearRegression()
 rfe_model = RFE(estimator=linreg_rfe, n_features_to_select = 12)
 rfe_model = rfe_model.fit(X_train, y_train)
@@ -180,8 +180,8 @@ signi_feat_rfe = feat_index[feat_index==1].index
 print(signi_feat_rfe)
 
 
-
- "1-VOTING REGRESSOR"
+                    """ENSEMBLE MODELLING"""
+#1-VOTING REGRESSOR
 r1 = xg.XGBRegressor(base_score=0.5, booster='gbtree', colsample_bylevel=1,
              colsample_bynode=1, colsample_bytree=1, gamma=0, gpu_id=-1,
              importance_type='gain', interaction_constraints='',
@@ -209,40 +209,31 @@ model1 = VotingRegressor([('ada', r3), ('xgboost', r1),('gbr',r2)])
 model1.fit(X,Y)
 ypred=model1.predict(testconcat)
 
-'HIGH LEVEL SEGRGATION'
-1 - CLASSIFICATION
-2 - REGRESSION
+                         'PERFORMANCE METRICS'
+#1 - CLASSIFICATION
+#2 - REGRESSION
 
 """1.1 - LOG metrics"""
-
-
 def full_log_likelihood(w, X, y):
     score = np.dot(X, w).reshape(1, X.shape[0])
     return np.sum(-np.log(1 + np.exp(score))) + np.sum(y * score)
-
 
 def null_log_likelihood(w, X, y):
     z = np.array([w if i == 0 else 0.0 for i, w in enumerate(w.reshape(1, X.shape[1])[0])]).reshape(X.shape[1], 1)
     score = np.dot(X, z).reshape(1, X.shape[0])
     return np.sum(-np.log(1 + np.exp(score))) + np.sum(y * score)
 
-
 def mcfadden_rsquare(w, X, y):
     return 1.0 - (full_log_likelihood(w, X, y) / null_log_likelihood(w, X, y))
-
 
 def mcfadden_adjusted_rsquare(w, X, y):
     k = float(X.shape[1])
     return 1.0 - ((full_log_likelihood(w, X, y) - k) / null_log_likelihood(w, X, y))
 
-    """1.2 - Scores for classification Algorihthms"""
-
-
+#Scores for classification Algorihthms
 # create an empty dataframe to store the scores for various algorithms
 score_card = pd.DataFrame(columns=['Probability Cutoff', 'AUC Score', 'Precision Score', 'Recall Score',
                                    'Accuracy Score', 'Kappa Score', 'f1-score'])
-
-
 # append the result table for all performance scores
 # performance measures considered for model comparision are 'AUC Score', 'Precision Score', 'Recall Score','Accuracy Score',
 # 'Kappa Score', and 'f1-score'
@@ -252,10 +243,8 @@ def update_score_card(model, cutoff):
     y_pred_prob = logreg.predict(X_test)
     # convert probabilities to 0 and 1 using 'if_else'
     y_pred = [0 if x < cutoff else 1 for x in y_pred_prob]
-
     # assign 'score_card' as global variable
     global score_card
-
     # append the results to the dataframe 'score_card'
     # 'ignore_index = True' do not consider the index labels
     score_card = score_card.append({'Probability Cutoff': cutoff,
@@ -266,8 +255,11 @@ def update_score_card(model, cutoff):
                                     'Kappa Score': metrics.cohen_kappa_score(y_test, y_pred),
                                     'f1-score': metrics.f1_score(y_test, y_pred)},
                                    ignore_index=True)
+score_card = pd.DataFrame(index=['Backward Elimination', 'RFECV'])
+score_card['No of features'] = [len(back_feat), len(rfe_feat)]
+score_card['Best score'] = [back_mod.k_score_, np.mean(score)]
 
-                      """ 1.3 - Cost based method"""
+#1.3 - Cost based method
 # define a function to calculate the total_cost for a cut-off value
 # pass the actual values of y, predicted probabilities of y, cost for FN and FP
 def calculate_total_cost(actual_value, predicted_value, cost_FN, cost_FP):
@@ -295,9 +287,7 @@ for cut_off in range(10, 100):
     # increment the value of 'i' for each row index in the dataframe 'df_total_cost'
     i += 1
 
-    """ 1.4 - Classfication Report """
-
-
+#Classfication Report
 # create a generalized function to calculate the metrics values for train set
 def get_train_report(model):
     # for training set:
@@ -341,7 +331,7 @@ def Confusionmatrix(actualvalue, predictedvalue):
 
 
                       'REGRESSION ERROR METRIC'
-##My Function
+#My Function
 def Regressionerrormetric(model):
     ypred = model.predict(xtest)
     scorecard = pd.DataFrame({
@@ -364,10 +354,7 @@ C['MODEL-NAME'] = ['BAGGING', 'BOOSTING']
 print(C.to_string(index=False)) ## Printing without index
 
 
-score_card = pd.DataFrame(index=['Backward Elimination', 'RFECV'])
-score_card['No of features'] = [len(back_feat), len(rfe_feat)]
-score_card['Best score'] = [back_mod.k_score_, np.mean(score)]
-score_card
+
 
 
 
