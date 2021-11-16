@@ -209,7 +209,7 @@ data = data.drop(['Columnname'],axis=1)
 numdata = data.select_dtypes(include = np.number)
 catdata = data.select_dtypes(exclude = np.number)
 
-#Method 2
+#Method 2 - Column Difference
 catdata = ipl.loc[:,['Team','Tournament','Player']]
 numdata = ipl[ipl.columns.difference(['Team','Tournament','Player'])]
 
@@ -220,7 +220,7 @@ for i in catdata:
     catdata[i] = catdata[i].astype('str')
 
 'Feature understanding'
-# 5 POINT summary
+# 5 POINT summary - NUMERICAL
 ipl.describe()
 numdata.describe(include = 'all')
 catdata.describe(include = 'all')
