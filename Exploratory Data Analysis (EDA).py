@@ -176,10 +176,8 @@ from sklearn.metrics import fbeta_score
 from sklearn.model_selection import GridSearchCV
 from sklearn import tree
 
-
 #STACKING  MODELS
 from sklearn.ensemble import VotingRegressor
-
 
 ## WARNNINGS
 from warnings import filterwarnings
@@ -661,8 +659,6 @@ plot(df)
 from dataprep.eda import plot_diff
 plot_diff([df1, df2])
 
-
-
                         'TARGET CLASS BALANCING - CLASSFICATION'
                             'Random Under Sampling'
 rus = RandomUnderSampler(return_indices =  True)
@@ -893,17 +889,17 @@ fields = ['name', 'branch', 'year', 'cgpa']
                                '5 - Add values in a row separated by comma'
 
 
-                           def sum_of_number(listx):
-                               a = []
-                               n = 0
-                               if len(listx) == 1:
-                                   a = listx
-                                   n = a
+def sum_of_number(listx):
+                        a = []
+                        n = 0
+                        if len(listx) == 1:
+                            a = listx
+                            n = a
                                else:
                                    a = str(listx).split(',')
                                    for i in range(0, len(a)):
                                        n = n + int(a[i])
-                               return n
+                return n
 
 
                            --ALITER
