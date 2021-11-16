@@ -3,10 +3,6 @@ pps.predictors(train_df, "Overall_Experience")[['x', 'y', 'ppscore']]
 
                        ""Feature importance""
 # logistic regression for feature importance
-
-from sklearn.linear_model import LogisticRegression
-from matplotlib import pyplot
-# define dataset
 X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
 # define the model
 model = LogisticRegression()
@@ -23,9 +19,6 @@ pyplot.show()
 
 
 # decision tree for feature importance on a regression problem
-from sklearn.datasets import make_regression
-from sklearn.tree import DecisionTreeRegressor
-from matplotlib import pyplot
 # define dataset
 X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
 # define the model
@@ -42,12 +35,7 @@ pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
 
 
-
 # decision tree for feature importance on a classification problem
-from sklearn.datasets import make_classification
-from sklearn.tree import DecisionTreeClassifier
-from matplotlib import pyplot
-# define dataset
 X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
 # define the model
 model = DecisionTreeClassifier()
@@ -64,9 +52,6 @@ pyplot.show()
 
 
 # random forest for feature importance on a regression problem
-from sklearn.datasets import make_regression
-from sklearn.ensemble import RandomForestRegressor
-from matplotlib import pyplot
 # define dataset
 X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
 # define the model
@@ -86,10 +71,6 @@ fe_imp=important_features.sort_values(by='Importance',ascending=False)
 
 
 # random forest for feature importance on a classification problem
-from sklearn.datasets import make_classification
-from sklearn.ensemble import RandomForestClassifier
-from matplotlib import pyplot
-# define dataset
 X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
 # define the model
 model = RandomForestClassifier()
@@ -107,9 +88,6 @@ pyplot.show()
 
 
 # xgboost for feature importance on a regression problem
-from sklearn.datasets import make_regression
-from xgboost import XGBRegressor
-from matplotlib import pyplot
 # define dataset
 X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
 # define the model
@@ -127,9 +105,6 @@ pyplot.show()
 
 
 # xgboost for feature importance on a classification problem
-from sklearn.datasets import make_classification
-from xgboost import XGBClassifier
-from matplotlib import pyplot
 # define dataset
 X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
 # define the model
@@ -146,7 +121,7 @@ pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
 
 
-'2-FEATURE SELECTION'
+'                              2-FEATURE SELECTION'
 #FORWARD SELECTION
 #VERSION1
 from sklearn.feature_selection import SequentialFeatureSelector
@@ -190,6 +165,7 @@ sfs_backward = linreg_backward.fit(X_train, y_train)
 print('Features selelected using backward elimination are: ')
 print(sfs_backward.k_feature_names_)
 print('\nR-Squared: ', sfs_backward.k_score_)
+
 
 ##RECURSIVE FEATURE ELIMINATION
 linreg_rfe = LinearRegression()
@@ -291,9 +267,7 @@ def update_score_card(model, cutoff):
                                     'f1-score': metrics.f1_score(y_test, y_pred)},
                                    ignore_index=True)
 
-    """ 1.3 - Cost based method"""
-
-
+                      """ 1.3 - Cost based method"""
 # define a function to calculate the total_cost for a cut-off value
 # pass the actual values of y, predicted probabilities of y, cost for FN and FP
 def calculate_total_cost(actual_value, predicted_value, cost_FN, cost_FP):
@@ -359,18 +333,15 @@ def positivenegatives(y_actual, y_hat):
             FN += 1
     return (TP, FP, TN, FN)
 
-    '1.6 -- CONFUSION MATRIX'
-
-
+                     'CONFUSION MATRIX'
 def Confusionmatrix(actualvalue, predictedvalue):
     cm = confusion_matrix(actualvalue, predictedvalue)
     hm = sns.heatmap(cm)
     return cm, hm
 
-    '2.1 - REGRESSION ERROR METRIC'
 
-
-##RegressionerrorMetric - My Function
+                      'REGRESSION ERROR METRIC'
+##My Function
 def Regressionerrormetric(model):
     ypred = model.predict(xtest)
     scorecard = pd.DataFrame({
@@ -383,7 +354,7 @@ def Regressionerrormetric(model):
         index=['ERROR','MAE','MSE', 'RMSE', 'MAPE', 'OE', 'OEP'])
     return scorecard.head(1)
 
-#CALLING THE FUNCTION
+#APPLYING THE FUNCTION
 A = Regressionerrormetric(model1)
 B = Regressionerrormetric(model2)
 C = pd.concat([A, B], axis=0)
@@ -398,7 +369,9 @@ score_card['No of features'] = [len(back_feat), len(rfe_feat)]
 score_card['Best score'] = [back_mod.k_score_, np.mean(score)]
 score_card
 
-'2.2 - General Formulas'
+
+
+                         'General Formulas'
 mape = mean_absolute_error(Y_actual, Y_Predicted) * 100
 rmse = np.sqrt(((ypred - ytest) ** 2).mean())
 OverallError = np.abs((ytest - ypred)),
