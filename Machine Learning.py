@@ -3,7 +3,7 @@ pps.predictors(train_df, "Overall_Experience")[['x', 'y', 'ppscore']]
 
                        ""Feature importance""
 # logistic regression for feature importance
-from sklearn.datasets import make_classification
+
 from sklearn.linear_model import LogisticRegression
 from matplotlib import pyplot
 # define dataset
@@ -147,8 +147,8 @@ pyplot.show()
 
 
 '2-FEATURE SELECTION'
- '1 - FORWARD SELECTION'
-##1.1 -  Version1
+#FORWARD SELECTION
+#VERSION1
 from sklearn.feature_selection import SequentialFeatureSelector
 from sklearn.neighbors import KNeighborsClassifier
 sfs = SequentialFeatureSelector(estimator=KNeighborsClassifier(n_neighbors=3),
@@ -158,7 +158,7 @@ sfs.get_support()
 sfs.get_params([deep])
 
 
-##1.2 -  Version2
+##Version2
 linreg = LinearRegression()
 linreg_forward = sfs(estimator=linreg, k_features = 'best', forward=True,
                      verbose=2, scoring='r2')
@@ -182,9 +182,7 @@ print(linreg_forward.k_feature_names_)
 # print the R-squared value
 print('\nR-Squared: ', sfs_forward.k_score_)
 
-
-
-                            '2 - BACKWARD ELIMINATION'
+##BACKWARD ELIMINATION
 linreg = LinearRegression()
 linreg_backward = sfs(estimator = linreg, k_features = 'best', forward = False,
                      verbose = 2, scoring = 'r2')
@@ -193,9 +191,7 @@ print('Features selelected using backward elimination are: ')
 print(sfs_backward.k_feature_names_)
 print('\nR-Squared: ', sfs_backward.k_score_)
 
-
-
-                         '3 - RECURSIVE FEATURE ELIMINATION'
+##RECURSIVE FEATURE ELIMINATION
 linreg_rfe = LinearRegression()
 rfe_model = RFE(estimator=linreg_rfe, n_features_to_select = 12)
 rfe_model = rfe_model.fit(X_train, y_train)
@@ -341,12 +337,7 @@ def get_train_report(model):
 
 # create a generalized function to calculate the metrics values for test set
 def get_test_report(model):
-    # for test set:
-    # test_pred: prediction made by the model on the test dataset 'X_test'
-    # y_test: actual values of the target variable for the test dataset
-    # predict the output of the target variable from the test data
     test_pred = model.predict(X_test)
-    # return the performace measures on test set
     return (classification_report(y_test, test_pred))
 
     """ 1.5 - Calculate TP,TN,FP,FN"""
@@ -379,6 +370,7 @@ def Confusionmatrix(actualvalue, predictedvalue):
     '2.1 - REGRESSION ERROR METRIC'
 
 
+##RegressionerrorMetric - My Function
 def Regressionerrormetric(model):
     ypred = model.predict(xtest)
     scorecard = pd.DataFrame({
@@ -388,22 +380,18 @@ def Regressionerrormetric(model):
         'Mean Absolute Percentage error': np.mean(np.abs((ytest - ypred) / ytest)) * 100,
         'Overall Error': np.abs((ytest - ypred)),
         'Overall Error Percentage': np.abs((ytest - ypred) / (ytest)) * 100},
-        index=['ERROR', 'MSE', 'RMSE', 'MAPE', 'OE', 'OEP'])
+        index=['ERROR','MAE','MSE', 'RMSE', 'MAPE', 'OE', 'OEP'])
     return scorecard.head(1)
 
-
-## CALLING THE FUNCTION
+#CALLING THE FUNCTION
 A = Regressionerrormetric(model1)
 B = Regressionerrormetric(model2)
 C = pd.concat([A, B], axis=0)
 C['MODELNO'] = [1, 2]
-C['MODEL-NAME'] = ['RF', 'XGB']
+C['MODEL-NAME'] = ['BAGGING', 'BOOSTING']
 
-## Printing without index
-print(C.to_string(index=False))
+print(C.to_string(index=False)) ## Printing without index
 
-## Exporting the Error Dataframe
-C.to_excel('')
 
 score_card = pd.DataFrame(index=['Backward Elimination', 'RFECV'])
 score_card['No of features'] = [len(back_feat), len(rfe_feat)]
