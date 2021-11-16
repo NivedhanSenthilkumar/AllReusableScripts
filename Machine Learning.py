@@ -1,6 +1,7 @@
                            "Predictive Power Score"
 pps.predictors(train_df, "Overall_Experience")[['x', 'y', 'ppscore']]
 
+
                        ""Feature importance""
 # logistic regression for feature importance
 X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
@@ -33,6 +34,7 @@ for i,v in enumerate(importance):
 # plot feature importance
 pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
+
 
 
 # decision tree for feature importance on a classification problem
@@ -84,7 +86,6 @@ for i,v in enumerate(importance):
 # plot feature importance
 pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
-
 
 
 # xgboost for feature importance on a regression problem
@@ -146,7 +147,7 @@ print(sfs_forward.k_feature_names_)
 print('\nR-Squared: ', sfs_forward.k_score_)
 
 
-##1.3 -  Version3
+#Version3
 linreg = LinearRegression()
 linreg_forward = sfs(estimator = linreg, k_features = (5,15), forward = True,
                      verbose = 2, scoring = 'r2')
@@ -157,7 +158,8 @@ print(linreg_forward.k_feature_names_)
 # print the R-squared value
 print('\nR-Squared: ', sfs_forward.k_score_)
 
-##BACKWARD ELIMINATION
+
+#BACKWARD ELIMINATION
 linreg = LinearRegression()
 linreg_backward = sfs(estimator = linreg, k_features = 'best', forward = False,
                      verbose = 2, scoring = 'r2')
@@ -167,7 +169,7 @@ print(sfs_backward.k_feature_names_)
 print('\nR-Squared: ', sfs_backward.k_score_)
 
 
-                      '3-RECURSIVE FEATURE ELIMINATION'
+#RECURSIVE FEATURE ELIMINATION
 linreg_rfe = LinearRegression()
 rfe_model = RFE(estimator=linreg_rfe, n_features_to_select = 12)
 rfe_model = rfe_model.fit(X_train, y_train)
@@ -178,6 +180,7 @@ feat_index = pd.Series(data = rfe_model.ranking_, index = X_train.columns)
 signi_feat_rfe = feat_index[feat_index==1].index
 # print the significant features obtained from RFE
 print(signi_feat_rfe)
+
 
 
                     """ENSEMBLE MODELLING"""
@@ -323,6 +326,7 @@ def positivenegatives(y_actual, y_hat):
             FN += 1
     return (TP, FP, TN, FN)
 
+
                      'CONFUSION MATRIX'
 def Confusionmatrix(actualvalue, predictedvalue):
     cm = confusion_matrix(actualvalue, predictedvalue)
@@ -343,6 +347,7 @@ def Regressionerrormetric(model):
         'Overall Error Percentage': np.abs((ytest - ypred) / (ytest)) * 100},
         index=['ERROR','MAE','MSE', 'RMSE', 'MAPE', 'OE', 'OEP'])
     return scorecard.head(1)
+
 
 #APPLYING THE FUNCTION
 A = Regressionerrormetric(model1)
