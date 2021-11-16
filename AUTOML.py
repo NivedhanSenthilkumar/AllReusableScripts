@@ -187,7 +187,7 @@ reg = LazyRegressor(ignore_warnings=False, custom_metric=None)
 models, predictions = reg.fit(X_train, X_test, y_train, y_test)
 
 
-                     '6-h20'
+                      '6-h20'
 import h2o
 h2o.init()
 from h2o.automl import H2OAutoML
@@ -202,11 +202,7 @@ x.remove("customerID")
 
 aml = H2OAutoML(max_models = 10, seed = 10, exclude_algos = ["StackedEnsemble", "DeepLearning"], verbosity="info", nfolds=0)
 
-!nvidia-smi
-
 aml.train(x = x, y = y, training_frame = churn_train, validation_frame=churn_valid)
-
-!nvidia-smi
 
 lb = aml.leaderboard
 lb.head()
@@ -227,21 +223,18 @@ out.confusion_matrix()
 out.varimp_plot()
 aml.leader.download_mojo(path = "./")
 
-'7-autogluon'
+
+                                        '7-autogluon'
 BASE_DIR = '/tmp'
 OUTPUT_FILE = os.path.join(BASE_DIR, 'churn_data.csv')
 
 churn_data=urllib.request.urlretrieve('https://raw.githubusercontent.com/srivatsan88/YouTubeLI/master/dataset/WA_Fn-UseC_-Telco-Customer-Churn.csv', OUTPUT_FILE)
 
-churn_master_df = pd.read_csv(OUTPUT_FILE)
 
 size = int(0.8*churn_master_df.shape[0])
 train_df = churn_master_df[:size]
 test_df = churn_master_df[size:]
 
-test_df.shape
-
-test_df
 
 train_data = task.Dataset(df=train_df)
 test_data = task.Dataset(df=test_df)
@@ -268,20 +261,12 @@ print(predictor.problem_type)
 print(predictor.feature_types)
 
 predictor.predict_proba(test_data_nolab)
-
 predictor.leaderboard()
 
+
 hp_tune = True
-
-rf_options = {
-    'n_estimators': 100,
-}
-
-gbm_options = {
-    'num_boost_round': 100,
-    'num_leaves': ag.space.Int(lower=6, upper=20, default=8),
-}
-
+rf_options = { 'n_estimators': 100}
+gbm_options = {'num_boost_round': 100,'num_leaves': ag.space.Int(lower=6, upper=20, default=8)}
 hyperparameters = {'RF':rf_options, 'GBM': gbm_options}
 
 time_limits = 2*60
