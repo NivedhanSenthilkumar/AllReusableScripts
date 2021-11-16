@@ -115,9 +115,17 @@ import pycaret
 import merlion
 import auto_ts
 
-
 #Sampling Techniques - Classification
 from imblearn.under_sampling import RandomUnderSampler
+
+#Feature Importance
+from sklearn.linear_model import LogisticRegression
+from matplotlib import pyplot
+from sklearn.datasets import make_regression
+from sklearn.datasets import make_classification
+from sklearn.tree import DecisionTreeRegressor
+from matplotlib import pyplot
+
 
 # Models
 from sklearn.linear_model import LogisticRegression
