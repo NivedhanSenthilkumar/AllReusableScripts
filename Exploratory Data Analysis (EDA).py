@@ -38,7 +38,7 @@ canvas1.create_window(150, 180, window=button1)
 root.mainloop()
 
 
-                    """ 1.3 - Import LIBRARIES"""
+                    """ Import LIBRARIES"""
 ##1-GENERAL
 import pandas as pd
 from wordcloud import WordCloud
@@ -71,17 +71,17 @@ from sklearn.preprocessing import RobustScaler
 import category_encoders as ce
 from sklearn.preprocessing import LabelEncoder
 
-## TRANSFORMATION
+##TRANSFORMATION
 from sklearn.preprocessing import FunctionTransformer
 from sklearn.preprocessing import PowerTransformer
 
-##5-Imputation
+##Imputation
 from sklearn.impute import KNNImputer
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
 
 
-##5-STATISTICS
+##STATISTICS
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 import statsmodels
 import statsmodels.api as sm
@@ -94,14 +94,10 @@ from statsmodels.stats import power
 import statsmodels.formula.api as smf
 from scipy.stats.mstats import winsorize
 
-
-
-##6-train-test split
+##train-test split
 from sklearn.model_selection import train_test_split
 
-
-
-## MACHINE LEARNING
+##MACHINE LEARNING
 #Feature selection
 from sklearn.feature_selection import RFE
 from mlxtend.feature_selection import SequentialFeatureSelector as sfs
@@ -125,7 +121,6 @@ from sklearn.datasets import make_regression
 from sklearn.datasets import make_classification
 from sklearn.tree import DecisionTreeRegressor
 from matplotlib import pyplot
-
 
 # Models
 from sklearn.linear_model import LogisticRegression
@@ -196,7 +191,7 @@ pd.options.display.float_format = '{:.6f}'.format
 pd.options.display.max_columns = None
 
 
-                             """'2 - DATA PREPROCESSING'"""
+                             """2 - DATA PREPROCESSING"""
 'Source data import'
 data = pd.read_excel('D:/ORIGINALS -COURSE ONES/SLC/Miniproject/SLC Mini Projects/SLC Mini Projects 2.0/GermanCredit.xlsx')
 print(data)
@@ -208,7 +203,6 @@ print(data.size)
 
 'Dropping unwanted variables'
 data = data.drop(['Columnname'],axis=1)
-
 
 'Data Segregation'
 #Method 1
@@ -271,11 +265,10 @@ def variablesummary(x):
                   index=['N', 'NMISS', 'SUM', 'MEAN','MEDIAN', 'STD', 'VAR', 'MIN', 'P1' , 'P5' ,'P10' ,'P25' ,'P50' ,'P75' ,'P90' ,'P95' ,'P99' ,'MAX','LC','UC','outlier_flag'])
 # UC = MEAN + 2 STD
 
-
+'CATEGORICAL'
 ## VALUE - COUNTS
 for i in catdata.columns:
     print(catdata[i].value_counts())
-
 for i in numdata.columns:
     print(numdata[i].value_counts())
 
