@@ -216,6 +216,8 @@ numdata = ipl[ipl.columns.difference(['Team','Tournament','Player'])]
 'Datatype Conversion'
 for i in numdata:
     numdata[i] = numdata[i].astype('float')
+for i in catdata:
+    catdata[i] = catdata[i].astype('str')
 
 'Feature understanding'
 # 5 POINT summary
