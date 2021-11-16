@@ -318,7 +318,7 @@ pd.DataFrame(((df_num < extreme_lower_range) | (df_num > extreme_upper_range)).s
              columns = ['No. of Outliers']).sort_values(by = 'No. of Outliers', ascending = False) / len(df)
 
 
-                          '2.10 - Outlier Treatment '
+'Outlier Treatment'
 #1-Capping (Winzorization)
 for i in numdata.columns:
     q1 = numdata[i].quantile(0.25)
@@ -404,30 +404,26 @@ def visual(X):
         distplot = sns.distplot(X.columns)
         scatterplot = sns.scatterplot(X.columns)
 
+
                          'TRANSFORMATION'
-#1-Log Transformation
+#Log Transformation
 np.log2(numdata1['Item_Outlet_Sales']+0.000000001).skew()
 
-
-#2-Power Transformation
+#Power Transformation
 np.power(numdata1['Item_Outlet_Sales'],0.39).skew()
 
-
-#3-Squareroot Transformation
+#Squareroot Transformation
 np.sqrt(df.iloc[:,0])
 
-
-#4-Boxcox Transformation
+#Boxcox Transformation
 sales_box,lam= stats.boxcox(numdata1['Item_Outlet_Sales'])
 pd.DataFrame(sales_box).skew()
 
-
-#5-Custom Transformer
+#Custom Transformer
 transformer = FunctionTransformer(np.log2, validate = True)
 df_scaled[col_names] = transformer.transform(features.values)
 
-
-#6-PowerTransformer
+#PowerTransformer
 scaler = PowerTransformer(method = 'box-cox')
 df_scaled[col_names] = scaler.fit_transform(numdata.values)
 #NOTE-method = 'box-cox' or 'yeo-johnson''
@@ -438,16 +434,13 @@ df_scaled[col_names] = scaler.fit_transform(numdata.values)
 #1 - One hot Encoding
 dummy_var = pd.get_dummies(data = catdata, drop_first = True)
 
-
 #2 - Factorize Encoding
 for i in catdata:
     catdata[i] = catdata[i].factorize()[0]
 
-
 #3 - Ordinal Encoding
 ce_ord = ce.OrdinalEncoder(cols = ['color'])
 ce_ord.fit_transform(X, y['outcome'])
-
 
 # Label Encoding
 le = LabelEncoder()
@@ -457,11 +450,8 @@ encoded = le.fit_transform(np.ravel(X))
 ce = CountEncoder(cols = ['Manufacturer', 'Category', 'Leather_interior', 'Fuel_type', 'Gear_box_type',
                           'Drive_wheels', 'Wheel', 'Color', 'Model_1', 'Model_2'],
                   handle_unknown = 0)
-
 X = ce.fit_transform(X)
 test_df = ce.transform(test_df)
-
-
 
 #Binary Encoder
 ce_bin = ce.BinaryEncoder(cols = ['color'])
@@ -487,7 +477,6 @@ ce_leave.transform(X3, y3['outcome'])
 # Sum Encoder
 ce_sum = ce.SumEncoder(cols = ['color'])
 ce_sum.fit_transform(X2, y2)
-
 
 #6- Polynomial Encoder(onehot)
 ce_poly = ce.PolynomialEncoder(cols=['color'])
@@ -598,27 +587,25 @@ r.publish(name='stock_report', visibility='PUBLIC')
 
 
                                """3 - EDA Reports"""
-                               # 3.1-Pandas Profiling
+ # 3.1-Pandas Profiling
 report = pp.ProfileReport(data)
 report.to_file('profile_report.html')
 
-                                #3.2- Sweetviz
+#3.2- Sweetviz
 advert_report = sv.analyze(data)
 advert_report.show_html('Advertising.html')
 
-                                # 3.3-dtale
+# 3.3-dtale
 d = dtale.show(data)
 d.open_browser() 
 
-
-                             #3.4 - Autoviz
+#3.4 - Autoviz
 #importing Autoviz class
 from autoviz.AutoViz_Class import AutoViz_Class#Instantiate the AutoViz class
 AV = AutoViz_Class()
 df = AV.AutoViz('car_design.csv')
-                             
 
-                             #3.5 -Dora
+#3.5 -Dora
 # Import required module
 from Dora import Dora
 # Create object
@@ -628,7 +615,7 @@ dora.configure(output = 'A', data = 'data.csv')
 # Display dataset
 dora.data
 
-                          #3.6 - Dataprep
+#3.6 - Dataprep
 #1- Prepare report
 from dataprep.datasets import load_dataset
 from dataprep.eda import create_report
@@ -675,13 +662,12 @@ xtrain, xtest, ytrain, ytest = train_test_split( X, Y, test_size=0.33, random_st
                            "Predictive Power Score"
 pps.predictors(train_df, "Overall_Experience")[['x', 'y', 'ppscore']]
 
- 'TIME FUNCTIONS'
+                             'TIME FUNCTIONS'
 ## Splitting date into day,month,year
 concat["day"] = concat['Orderdate'].map(lambda x: x.day)
 concat["month"] = concat['Orderdate'].map(lambda x: x.month)
 concat["year"] = concat['Orderdate'].map(lambda x: x.year)
 concat['dayofweek'] = pd.to_datetime(concat['Orderdate']).dt.dayofweek
-
 
 ##  Split into Weeks
 def Week(x):
