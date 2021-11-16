@@ -189,20 +189,20 @@ pd.options.display.max_columns = None
 
 
                              """'2 - DATA PREPROCESSING'"""
-                             '2.1 - Source data import'
+'2.1 - Source data import'
 data = pd.read_excel('D:/ORIGINALS -COURSE ONES/SLC/Miniproject/SLC Mini Projects/SLC Mini Projects 2.0/GermanCredit.xlsx')
 print(data)
                            
-                               '2.2 - Sanity Check'
+'2.2 - Sanity Check'
 print(data.dtypes)
 print(data.shape)
 print(data.size)
 
-                    '2.6 - Dropping unwanted variables'
+'2.6 - Dropping unwanted variables'
 # Drop the id columns and other obvious unwanted columns
 
 
-                         '2.3 - Data Segregation'
+'2.3 - Data Segregation'
 --------------------------- Method 1 ---------------------------------------------------------------------------
 numdata = data.select_dtypes(include = np.number)
 catdata = data.select_dtypes(exclude = np.number)
@@ -214,12 +214,12 @@ numdata = ipl[ipl.columns.difference(['Team','Tournament','Player'])]
 
 
 
-                           '2.5 - Datatype Conversion'
+'2.5 - Datatype Conversion'
 for i in numdata:
     numdata[i] = numdata[i].astype('float')
 
 
-                       '2.4 - Feature understanding'
+ '2.4 - Feature understanding'
 # 5 POINT summary
 ipl.describe()
 numdata.describe(include = 'all')
@@ -338,7 +338,6 @@ for i in numdata.columns:
         if numdata.loc[ind1,i] < LB:
             numdata.loc[ind1,i] = LC
 
-
 #2-Inbuilt Function method
 a = np.array([10, 4, 9, 8, 5, 3, 7, 2, 1, 6])
 b = np.array([5, 4, 9, 1, 5, 3, 7, 2, 1, 6])
@@ -348,7 +347,6 @@ masked_array(data=[8, 4, 8, 8, 5, 3, 7, 2, 2, 6],
        fill_value=999999)
 
 
-                       
                             'Scaling'
 #1-MINMAX SCALER
 mm = MinMaxScaler()
@@ -593,8 +591,6 @@ dp.Report("## Vaccination Report",
 ------------------------------------ALITER------------------------------------------------------------------------------
 
 # Scripts to create df and chart
-....
-
 # Once you have the df and the chart, simply use
 r = dp.Report(
   dp.Markdown('My simple report'), #add description to the report
@@ -603,8 +599,6 @@ r = dp.Report(
 )
 # Publish your report. Make sure to have visibility='PUBLIC' if you want to share your report
 r.publish(name='stock_report', visibility='PUBLIC')
-
-                  
 
 
                                """3 - EDA Reports"""
@@ -627,7 +621,7 @@ from autoviz.AutoViz_Class import AutoViz_Class#Instantiate the AutoViz class
 AV = AutoViz_Class()
 df = AV.AutoViz('car_design.csv')
                              
-                             
+
                              #3.5 -Dora
 # Import required module
 from Dora import Dora
