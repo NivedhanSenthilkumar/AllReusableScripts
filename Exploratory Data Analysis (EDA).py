@@ -587,25 +587,24 @@ r.publish(name='stock_report', visibility='PUBLIC')
 
 
                                """3 - EDA Reports"""
- # 3.1-Pandas Profiling
+#Pandas Profiling
 report = pp.ProfileReport(data)
 report.to_file('profile_report.html')
 
-#3.2- Sweetviz
+#Sweetviz
 advert_report = sv.analyze(data)
 advert_report.show_html('Advertising.html')
 
-# 3.3-dtale
+#dtale
 d = dtale.show(data)
 d.open_browser() 
 
-#3.4 - Autoviz
-#importing Autoviz class
+#Autoviz
 from autoviz.AutoViz_Class import AutoViz_Class#Instantiate the AutoViz class
 AV = AutoViz_Class()
 df = AV.AutoViz('car_design.csv')
 
-#3.5 -Dora
+#Dora
 # Import required module
 from Dora import Dora
 # Create object
@@ -614,6 +613,7 @@ dora = Dora()
 dora.configure(output = 'A', data = 'data.csv')
 # Display dataset
 dora.data
+
 
 #3.6 - Dataprep
 #1- Prepare report
@@ -638,29 +638,22 @@ plot_diff([df1, df2])
 
 
                         'TARGET CLASS BALANCING - CLASSFICATION'
-                            'Random Under Sampling'
+#Random Under Sampling
 rus = RandomUnderSampler(return_indices =  True)
 xresampled,yresampled,idxresampled  =  rus.fit_sample(X,Y)
 
-                             'Random Over Sampling'
+#Random Over Sampling
 rus = RandomUnderSampler(return_indices =  True)
 xresampled,yresampled,idxresampled  =  rus.fit_sample(X,Y)
 
-
-                                 'SMOTE'
+#SMOTE
 s=SMOTE()
 imbal=smote.fit_transform(x,y)
 
-
-
-
-                           """  Train Test Split"""
+                           """Train Test Split"""
 xtrain, xtest, ytrain, ytest = train_test_split( X, Y, test_size=0.33, random_state=42)
 
 
-
-                           "Predictive Power Score"
-pps.predictors(train_df, "Overall_Experience")[['x', 'y', 'ppscore']]
 
                              'TIME FUNCTIONS'
 ## Splitting date into day,month,year
