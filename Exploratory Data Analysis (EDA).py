@@ -189,37 +189,33 @@ pd.options.display.max_columns = None
 
 
                              """'2 - DATA PREPROCESSING'"""
-'2.1 - Source data import'
+'Source data import'
 data = pd.read_excel('D:/ORIGINALS -COURSE ONES/SLC/Miniproject/SLC Mini Projects/SLC Mini Projects 2.0/GermanCredit.xlsx')
 print(data)
-                           
-'2.2 - Sanity Check'
+
+'Sanity Check'
 print(data.dtypes)
 print(data.shape)
 print(data.size)
 
-'2.6 - Dropping unwanted variables'
-# Drop the id columns and other obvious unwanted columns
+'Dropping unwanted variables'
+data = data.drop(['Columnname'],axis=1)
 
 
-'2.3 - Data Segregation'
---------------------------- Method 1 ---------------------------------------------------------------------------
+'Data Segregation'
+#Method 1
 numdata = data.select_dtypes(include = np.number)
 catdata = data.select_dtypes(exclude = np.number)
 
-
-------------------------Method 2 ------------------------------------------------------------------------------
+#Method 2
 catdata = ipl.loc[:,['Team','Tournament','Player']]
 numdata = ipl[ipl.columns.difference(['Team','Tournament','Player'])]
 
-
-
-'2.5 - Datatype Conversion'
+'Datatype Conversion'
 for i in numdata:
     numdata[i] = numdata[i].astype('float')
 
-
- '2.4 - Feature understanding'
+'Feature understanding'
 # 5 POINT summary
 ipl.describe()
 numdata.describe(include = 'all')
@@ -236,7 +232,7 @@ def numessentials(x):
                   index=['skew', 'SUM', 'MEAN','MEDIAN', 'STD', 'VAR', 'MIN','MAX'])
 
 
-## Numerical Attributes
+## Numerical Attributes - My Function
 def numericalattributes(X):
     Output = pd.DataFrame()
     Output['Variables'] = X.columns
