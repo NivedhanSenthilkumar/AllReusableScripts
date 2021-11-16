@@ -711,7 +711,6 @@ def Quarter(x):
     else:
         return 4
 
-
 ## Appying the Functions
 concat['Week'] = concat['day'].apply(Week)
 concat['Weekday/Weekend'] = concat['dayofweek'].apply(Weekdayend)
@@ -719,9 +718,8 @@ concat['Monthsplitup'] = concat['day'].apply(Monthsplitup)
 concat['Quarter'] = concat['month'].apply(Quarter)
 
 
-'Python program to convert time from 12 hour to 24 hour format'
-# Function to convert the date format
-def convert24(str1):
+#Python program to convert time from 12 hour to 24 hour format
+def convert24(str1):# Function to convert the date format
     # Checking if last two elements of time
     # is AM and first two elements are 12
     if str1[-2:] == "AM" and str1[:2] == "12":
@@ -737,9 +735,7 @@ def convert24(str1):
         return str1[:-2]
 
     else:
-
-        # add 12 to hours and remove PM
-        return str(int(str1[:2]) + 12) + str1[2:8]
+        return str(int(str1[:2]) + 12) + str1[2:8]# add 12 to hours and remove PM
 
 # Applying Function
 print(convert24("08:05:45 PM"))
@@ -863,9 +859,7 @@ fields = ['name', 'branch', 'year', 'cgpa']
                                    pass
                                return x
 
-                               '5 - Add values in a row separated by comma'
-
-
+#Add values in a row separated by comma
 def sum_of_number(listx):
                         a = []
                         n = 0
@@ -901,46 +895,45 @@ def sum_of_number(listx):
                                if x in ['AE', 'AP', 'AA']:
                                    return ('Armedforces')
 
-                                   '6 - ENCRYPTION and DECRYPTION'
-
-
-                           from cryptography.fernet import Fernet
-
-                           # we will be encryting the below string.
-                           message = "hello geeks"
+#ENCRYPTION and DECRYPTION
+from cryptography.fernet import Fernet
+    # we will be encryting the below string.
+message = "hello geeks"
 
                            # generate a key for encryptio and decryption
                            # You can use fernet to generate
                            # the key or use random key generator
                            # here I'm using fernet to generate key
 
-                           key = Fernet.generate_key()
+key = Fernet.generate_key()
 
                            # Instance the Fernet class with the key
 
-                           fernet = Fernet(key)
+fernet = Fernet(key)
 
                            # then use the Fernet class instance
                            # to encrypt the string string must must
                            # be encoded to byte string before encryption
-                           encMessage = fernet.encrypt(message.encode())
+encMessage = fernet.encrypt(message.encode())
 
-                           print("original string: ", message)
-                           print("encrypted string: ", encMessage)
+print("original string: ", message)
+print("encrypted string: ", encMessage)
 
                            # decrypt the encrypted string with the
                            # Fernet instance of the key,
                            # that was used for encrypting the string
                            # encoded byte string is returned by decrypt method,
                            # so decode it to string with decode methos
-                           decMessage = fernet.decrypt(encMessage).decode()
+decMessage = fernet.decrypt(encMessage).decode()
+print("decrypted string: ", decMessage)
 
-                           print("decrypted string: ", decMessage)
 
-                           """Replace"""
-                           # Replacing Empty values with None
-                           for i in numdata:
-                               numdata[i] = numdata[i].replace('-', None)
+
+ """Replace"""
+for i in numdata:
+                numdata[i] = numdata[i].replace('-', None)
+                               # Replacing Empty values with None
+
 
                            # Count of "None" Values
                            (numdata['Not Out'] == 'None').count()
