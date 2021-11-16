@@ -294,8 +294,6 @@ predictor = task.fit(train_data=train_data, tuning_data=test_data, label=label_c
                      search_strategy=search_strategy, nthreads_per_trial=1, ngpus_per_trial=1)
 
 predictor.fit_summary()
-
 predictor.fit_summary()
-
 predictor.leaderboard()
 
