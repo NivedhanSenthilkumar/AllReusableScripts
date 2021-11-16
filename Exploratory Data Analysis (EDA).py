@@ -621,7 +621,10 @@ d = dtale.show(data)
 d.open_browser() 
 
                              #3.4 - Autoviz
-                             
+#importing Autoviz class
+from autoviz.AutoViz_Class import AutoViz_Class#Instantiate the AutoViz class
+AV = AutoViz_Class()
+df = AV.AutoViz('car_design.csv')
                              
                              
                              #3.5 -Dora
@@ -641,23 +644,20 @@ from dataprep.eda import create_report
 df = load_dataset("titanic")
 create_report(df).show_browser()
 
-
 # 2 - EDA
 ## Plot correlation
 from dataprep.eda import plot_correlation
 plot_correlation(df)
-
 ## Missing values
 from dataprep.eda import plot_missing
 plot_missing(df)
-
 ## Distribution
 from dataprep.eda import plot
 plot(df)
-
 ## Difference between datframes
 from dataprep.eda import plot_diff
 plot_diff([df1, df2])
+
 
                         'TARGET CLASS BALANCING - CLASSFICATION'
                             'Random Under Sampling'
