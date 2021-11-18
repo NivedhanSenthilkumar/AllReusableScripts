@@ -337,30 +337,30 @@ def Confusionmatrix(actualvalue, predictedvalue):
 
                       'REGRESSION ERROR METRIC'
 #My Function
-def Regressionerrormetric(model):
-    ypred = model.predict(xtest)
-    scorecard = pd.DataFrame({
-        'Mean Absolute Error': metrics.mean_absolute_error(ytest, ypred),
-        'Mean Squared Error': metrics.mean_squared_error(ytest, ypred),
-        'Root Mean Squared Error': np.sqrt(((ypred - ytest) ** 2).mean()),
-        'Mean Absolute Percentage error': np.mean(np.abs((ytest - ypred) / ytest)) * 100,
-        'Overall Error': np.abs((ytest - ypred)),
-        'Overall Error Percentage': np.abs((ytest - ypred) / (ytest)) * 100},
-        index=['ERROR','MAE','MSE', 'RMSE', 'MAPE', 'OE', 'OEP'])
-    return scorecard.head(1)
+    def Regressionerrormetric(model):
+        ypred = model.predict(xtest)
+        scorecard = pd.DataFrame({
+            'Mean Absolute Error': metrics.mean_absolute_error(ytest, ypred),
+            'Mean Squared Error': metrics.mean_squared_error(ytest, ypred),
+            'Root Mean Squared Error': np.sqrt(((ypred - ytest) ** 2).mean()),
+            'Mean Absolute Percentage error': np.mean(np.abs((ytest - ypred) / ytest)) * 100,
+            'Mean Squared Log Error': metrics.mean_squared_log_error(ytest, ypred),
+            'Root Mean Square Log error': np.sqrt(metrics.mean_squared_log_error(ytest, ypred)),
+            'Overall Error': np.abs((ytest - ypred)).sum(),
+            'Overall Error Percentage': (np.abs((ytest - ypred) / (ytest)).sum()) * 100},
+            index=['ERROR', 'MAE', 'MSE', 'RMSE', 'MAPE', 'MSLE', 'RMSLE', 'OE', 'OEP'])
+        return scorecard.head(1)
 
 
-#APPLYING THE FUNCTION
-A = Regressionerrormetric(model1)
-B = Regressionerrormetric(model2)
-C = pd.concat([A, B], axis=0)
-C['MODELNO'] = [1, 2]
-C['MODEL-NAME'] = ['BAGGING', 'BOOSTING']
+        a = Regressionerrormetric(model1)
+        b = Regressionerrormetric(model2)
+        c = Regressionerrormetric(model3)
 
-print(C.to_string(index=False)) ## Printing without index
+        Experiments = pd.DataFrame()
+        Experiments['ModelName'] = ['Bagging&Boosting', 'Lighggm with RF', 'Boosting']
+        Experiments = pd.concat([a, b, c, ], axis=0)
 
-
-
+        print(Experiments)
 
 
 
