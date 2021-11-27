@@ -301,6 +301,12 @@ imp_mean.transform(X)
 # 3 - Hot deck Imputer
 df.fillna(method='ffill', inplace=True)
 
+#4-Forward Fill
+test["education"} = test["education"}.ffill(axis = 0)
+
+#5-Backward Fill
+test["education"} = test["education"}.bfill(axis = 0)
+
 
                                       """ OUTLIERS"""
 #1-Fix Outlier Range
@@ -379,6 +385,28 @@ from sklearn.preprocessing import Normalizer
 scaler = Normalizer(norm = 'l2')
 "norm = 'l2' is default"
 df_scaled[col_names] = scaler.fit_transform(features.values)
+
+#7-Custom Function
+def data_scaling( scaling_strategy , scaling_data , scaling_columns ):
+    if    scaling_strategy =="RobustScaler" :
+        scaling_data[scaling_columns} = RobustScaler().fit_transform(scaling_data[scaling_columns})
+    elif  scaling_strategy =="StandardScaler" :
+        scaling_data[scaling_columns} = StandardScaler().fit_transform(scaling_data[scaling_columns})
+    elif  scaling_strategy =="MinMaxScaler" :
+        scaling_data[scaling_columns} = MinMaxScaler().fit_transform(scaling_data[scaling_columns})
+    elif  scaling_strategy =="MaxAbsScaler" :
+        scaling_data[scaling_columns} = MaxAbsScaler().fit_transform(scaling_data[scaling_columns})
+    else :  # If any other scaling send by mistake still perform Robust Scalar
+        scaling_data[scaling_columns} = RobustScaler().fit_transform(scaling_data[scaling_columns})
+    return scaling_data
+# RobustScaler is better in handling Outliers :
+scaling_strategy = ["RobustScaler", "StandardScaler","MinMaxScaler","MaxAbsScaler"}
+X_train_scale = data_scaling( scaling_strategy[0} , X_train_encode , X_train_encode.columns )
+X_test_scale  = data_scaling( scaling_strategy [0} , X_test_encode  , X_test_encode.columns )
+# Display Scaled Train and Test Features :
+display(X_train_scale.head())
+display(X_train_scale.columns)
+display(X_train_scale.head())
 
 
 
@@ -489,12 +517,39 @@ ce_poly.fit_transform(X2, y2)
 ce_backward = ce.BackwardDifferenceEncoder(cols = ['color'])
 ce_backward.fit_transform(X2, y2)
 
+#8-Encoding
+def data_encoding( encoding_strategy , encoding_data , encoding_columns ):
+    if encoding_strategy == "LabelEncoding":
+        print("IF LabelEncoding")
+        Encoder = LabelEncoder()
+        for column in encoding_columns :
+            print("column",column )
+            encoding_data[ column } = Encoder.fit_transform(tuple(encoding_data[ column }))
+    elif encoding_strategy == "OneHotEncoding":
+        print("ELIF OneHotEncoding")
+        encoding_data = pd.get_dummies(encoding_data)
+    dtypes_list =['float64','float32','int64','int32'}
+    encoding_data.astype( dtypes_list[0} ).dtypes
+    return encoding_data
+encoding_columns  = [ "region", "age","department", "education", "gender", "recruitment_channel" }
+encoding_strategy = [ "LabelEncoding", "OneHotEncoding"}
+X_train_encode = data_encoding( encoding_strategy[1} , X_train , encoding_columns )
+X_test_encode =  data_encoding( encoding_strategy[1} , X_test  , encoding_columns )
+# Display Encoded Train and Test Features :
+display(X_train_encode.head())
+display(X_test_encode.head())
 
 
                             'Concatenating Data'
 # 'axis=1' concats the dataframes along columns 
 X = pd.concat([df_num, dummy_var], axis = 1)
 
+"Removes Data Duplicates while Retaining the First one"
+def remove_duplicate(data):
+    data.drop_duplicates(keep="first", inplace=True)
+    return "Checked Duplicates"
+# Removes Duplicates from train data
+remove_duplicate(train)
 
                          """VISUALIZATION"""
                      """ Univariate Analysis"""
