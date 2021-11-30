@@ -5,7 +5,7 @@ concat["month"] = concat['Orderdate'].map(lambda x: x.month)
 concat["year"] = concat['Orderdate'].map(lambda x: x.year)
 concat['dayofweek'] = pd.to_datetime(concat['Orderdate']).dt.dayofweek
 
-##  Split into Weeks
+##  Split Weeks
 def Week(x):
     if x >= 1 and x<= 8:
         return 1
