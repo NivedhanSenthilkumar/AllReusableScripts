@@ -181,6 +181,38 @@ signi_feat_rfe = feat_index[feat_index==1].index
 # print the significant features obtained from RFE
 print(signi_feat_rfe)
 
+                    "HYPERPARAMETER TUNING"
+#Optuna - Randomforest
+RANDOM_SEED = 42
+kfolds = KFold(n_splits=10, shuffle=True, random_state=RANDOM_SEED)
+def randomforest_objective(trial):
+    _n_estimators = trial.suggest_int("n_estimators", 50, 200)
+    _max_depth = trial.suggest_int("max_depth", 5, 20)
+    _min_samp_split = trial.suggest_int("min_samples_split", 2, 10)
+    _min_samples_leaf = trial.suggest_int("min_samples_leaf", 2, 10)
+    _max_features = trial.suggest_int("max_features", 10, 50)
+    rf = RandomForestRegressor(
+        max_depth=_max_depth,
+        min_samples_split=_min_samp_split,
+        min_samples_leaf=_min_samples_leaf,
+        max_features=_max_features,
+        n_estimators=_n_estimators,
+        n_jobs=-1,
+        random_state=RANDOM_SEED,
+    )
+    scores = cross_val_score(rf, X, y, cv=kfolds, scoring="r2")
+    return scores.mean()
+
+def tune(objective):
+    study = optuna.create_study(direction="maximize")
+    study.optimize(objective, n_trials=100)
+    params = study.best_params
+    best_score = study.best_value
+    print(f"Best score: {best_score} \nOptimized parameters: {params}")
+    return params
+
+##Apply Functions
+randomforest_params = tune(randomforest_objective)
 
 
                     """ENSEMBLE MODELLING"""
@@ -337,9 +369,9 @@ def Confusionmatrix(actualvalue, predictedvalue):
 
                       'REGRESSION ERROR METRIC'
 #My Function
-    def Regressionerrormetric(model):
-        ypred = model.predict(xtest)
-        scorecard = pd.DataFrame({
+def Regressionerrormetric(model):
+                               ypred = model.predict(xtest)
+                               scorecard = pd.DataFrame({
             'Mean Absolute Error': metrics.mean_absolute_error(ytest, ypred),
             'Mean Squared Error': metrics.mean_squared_error(ytest, ypred),
             'Root Mean Squared Error': np.sqrt(((ypred - ytest) ** 2).mean()),
