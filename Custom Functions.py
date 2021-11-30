@@ -1,4 +1,4 @@
-#1-using loops to iterate through nested dictionary/list python
+#Using loops to iterate through nested dictionary/list python
 def nested_loop_dict(obj):
     # Iterate over all key-value pairs of dict argument
     for key, value in obj.items():
@@ -15,7 +15,7 @@ for pair in nested_loop_dict(details):
     print('\n',pair)
 
 
-#2-Unique values in a dictionary
+#Unique values in a dictionary
 dict = {'511':'Vishnu','512':'Vishnu','513':'Ram','514':'Ram','515':'sita'}
 list =[] # create empty list
 for val in dict.values():
@@ -26,8 +26,7 @@ for val in dict.values():
 print(list)
 
 
-'1-CUSTOM FUNCTIONS'
-#1-PRICE SPLIT
+#Numerical if
 def pricesplit(x):
     if x>=0 and x<= 500:
         return 1
@@ -63,7 +62,7 @@ def pricesplit(x):
 
 
 
-## Writing to excel
+#Writing to excel
 import pandas as pd
 df1 = pd.DataFrame({'Data': ['a', 'b', 'c', 'd']})
 df2 = pd.DataFrame({'Data': [1, 2, 3, 4]})
@@ -91,38 +90,29 @@ mydict = [{'branch': 'COE', 'cgpa': '9.0', 'name': 'Nikhil', 'year': '2'},
 fields = ['name', 'branch', 'year', 'cgpa']
 # name of csv file
 
-
-                           '1 - String Split'
-                           df[['code', 'name_of_code']] = df["code"].str.split(" ", 1, expand=True)
-
-                           '2 - Separating Number from String'
+#String Split
+df[['code', 'name_of_code']] = df["code"].str.split(" ", 1, expand=True)
 
 
-                           def find_number(text):
-                               num = re.findall(r'[0-9]+', text)
-                               return " ".join(num)
+#Separating Number from String
+def find_number(text):
+    num = re.findall(r'[0-9]+', text)
+    return " ".join(num)
 
+#Removing whitespace
+def removewhitespace(x):
+    """
+    Helper function to remove any blank space from a string
+    x: a string
+    """
+    try:
+        # Remove spaces inside of the string
+        x = "".join(x.split())
 
-                           data['Reviewss'] = data['Reviewss'].apply(lambda x: find_number(x))
+    except:
+        pass
+    return x
 
-                           '3 - Strip '
-                           df["name_of_code"] = df["name_of_code"].
-
-                           '4 - Removing whitespace'
-
-
-                           def removewhitespace(x):
-                               """
-                               Helper function to remove any blank space from a string
-                               x: a string
-                               """
-                               try:
-                                   # Remove spaces inside of the string
-                                   x = "".join(x.split())
-
-                               except:
-                                   pass
-                               return x
 
 #Add values in a row separated by comma
 def sum_of_number(listx):
@@ -137,28 +127,25 @@ def sum_of_number(listx):
                                        n = n + int(a[i])
                 return n
 
-
-                           --ALITER
-                           df['Sum'] = df['Scores'].apply(lambda x: sum(map(float, x.split(','))))
-
-                           '5 - SEGMENTING FUNCTION'
-                           1)categorical
+df['Sum'] = df['Scores'].apply(lambda x: sum(map(float, x.split(','))))
 
 
-                           def regions(x):
-                               if x in ['WA', 'MT', 'OR', 'ID', 'WY', 'CA', 'NV', 'UT', 'CO', 'AK']:
-                                   return ('West')
-                               if x in ['AZ', 'NM', 'TX', 'OK', 'HI']:
-                                   return ('Southwest')
-                               if x in ['ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'IL', 'IN', 'MI', 'OH']:
-                                   return ('Midwest')
-                               if x in ['LA', 'AR', 'MS', 'AL', 'GA', 'FL', 'KY', 'TN', 'SC', 'NC', 'VA', 'DC', 'WV',
-                                        'DE', 'MD', 'PR', 'VI']:
-                                   return ('Southeast')
-                               if x in ['PA', 'NJ', 'NY', 'CT', 'RI', 'MA', 'NH', 'VT', 'ME', 'GU']:
-                                   return ('Northeast')
-                               if x in ['AE', 'AP', 'AA']:
-                                   return ('Armedforces')
+#String if
+def regions(x):
+    if x in ['WA', 'MT', 'OR', 'ID', 'WY', 'CA', 'NV', 'UT', 'CO', 'AK']:
+        return ('West')
+    if x in ['AZ', 'NM', 'TX', 'OK', 'HI']:
+        return ('Southwest')
+    if x in ['ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'IL', 'IN', 'MI', 'OH']:
+        return ('Midwest')
+    if x in ['LA', 'AR', 'MS', 'AL', 'GA', 'FL', 'KY', 'TN', 'SC', 'NC', 'VA', 'DC', 'WV',
+             'DE', 'MD', 'PR', 'VI']:
+        return ('Southeast')
+    if x in ['PA', 'NJ', 'NY', 'CT', 'RI', 'MA', 'NH', 'VT', 'ME', 'GU']:
+        return ('Northeast')
+    if x in ['AE', 'AP', 'AA']:
+        return ('Armedforces')
+
 
 #ENCRYPTION and DECRYPTION
 from cryptography.fernet import Fernet
@@ -193,12 +180,9 @@ decMessage = fernet.decrypt(encMessage).decode()
 print("decrypted string: ", decMessage)
 
 
-
- """Replace"""
+#Replace
 for i in numdata:
-                numdata[i] = numdata[i].replace('-', None)
-                               # Replacing Empty values with None
+    numdata[i] = numdata[i].replace('-', None)
 
 
-                           # Count of "None" Values
-                           (numdata['Not Out'] == 'None').count()
+
