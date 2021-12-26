@@ -368,7 +368,7 @@ def Confusionmatrix(actualvalue, predictedvalue):
 
 
                       'REGRESSION ERROR METRIC'
-#My Function
+#1-REGRESSION
 def Regressionerrormetric(model):
                                ypred = model.predict(xtest)
                                scorecard = pd.DataFrame({
@@ -383,17 +383,18 @@ def Regressionerrormetric(model):
             index=['ERROR', 'MAE', 'MSE', 'RMSE', 'MAPE', 'MSLE', 'RMSLE', 'OE', 'OEP'])
         return scorecard.head(1)
 
-
-        a = Regressionerrormetric(model1)
-        b = Regressionerrormetric(model2)
-        c = Regressionerrormetric(model3)
-
-        Experiments = pd.DataFrame()
-        Experiments['ModelName'] = ['Bagging&Boosting', 'Lighggm with RF', 'Boosting']
-        Experiments = pd.concat([a, b, c, ], axis=0)
-
-        print(Experiments)
-
+#2-CLASSIFICATION
+def Classificationerrormetric(model):
+    ypred = model.predict(xtest)
+    scorecard = pd.DataFrame({
+            'Accuracy': sklearn.metrics.accuracy_score(ytest, ypred),
+            'Area Under Curve': sklearn.metrics.roc_curve(ytest,ypred),
+            'F1': sklearn.metrics.f1_score(ytest,ypred),
+            'Recall': sklearn.metrics.recall_score(ytest,ypred),
+            'Precision': sklearn.metrics.precision_score(ytest,ypred),
+            'Log Loss': sklearn.metrics.log_loss(ytest,ypred)},
+            index=['ERROR', 'ACCURACY', 'ROC-AUC', 'F1', 'Recall', 'Precision', 'LogLoss'])
+        return scorecard.head(1)
 
 
                          'General Formulas'
