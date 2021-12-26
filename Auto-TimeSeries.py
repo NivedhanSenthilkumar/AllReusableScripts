@@ -113,3 +113,29 @@ test_pred, test_err = model.forecast(time_stamps = test_data.time_stamps)
 import matplotlib.pyplot as plt
 fig, ax = model.plot_forecast(time_series = test_data, plot_forecast_uncertainty = True)
 plt.show()
+
+                               '3-AUTO TIMESERIES'
+from auto_ts import auto_timeseries
+model = auto_timeseries( score_type='rmse', time_interval='Month', non_seasonal_pdq=None, seasonality=False, seasonal_period=12, model_type=['Prophet'], verbose=2)
+
+df = pd.read_csv("Amazon_Stock_Price.csv", usecols=['Date', 'Close'])
+df['Date'] = pd.to_datetime(df['Date'])
+df = df.sort_values('Date')
+
+train_df = df.iloc[:2800]
+test_df = df.iloc[2800:]
+
+train_df.Close.plot(figsize=(15,8), title= 'AMZN Stock Price', fontsize=14, label='Train')
+test_df.Close.plot(figsize=(15,8), title= 'AMZN Stock Price', fontsize=14, label='Test')
+plt.legend()
+plt.grid()
+plt.show()
+
+model = auto_timeseries(forecast_period=219, score_type='rmse', time_interval='D', model_type='best')
+model.fit(traindata= train_df, ts_column="Date", target="Close")
+
+model.get_leaderboard()
+model.plot_cv_scores()
+
+future_predictions = model.predict(testdata=219)
+
