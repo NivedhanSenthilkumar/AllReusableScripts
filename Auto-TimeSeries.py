@@ -109,10 +109,10 @@ model = DefaultForecaster(DefaultForecasterConfig())
 model.train(train_data = train_data)
 test_pred, test_err = model.forecast(time_stamps = test_data.time_stamps)
 
-
 import matplotlib.pyplot as plt
 fig, ax = model.plot_forecast(time_series = test_data, plot_forecast_uncertainty = True)
 plt.show()
+
 
                                '3-AUTO TIMESERIES'
 from auto_ts import auto_timeseries
