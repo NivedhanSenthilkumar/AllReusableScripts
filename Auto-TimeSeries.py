@@ -36,7 +36,6 @@ plot_model(plot = 'diagnostics')
 # Decomposition plot
 plot_model(plot = 'decomp_stl')
 
-
 #Model Training and Selectin(functional API)
 best = compare_models()# object-oriented API
 best = exp.compare_models()
