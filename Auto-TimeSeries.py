@@ -139,3 +139,55 @@ model.plot_cv_scores()
 
 future_predictions = model.predict(testdata=219)
 
+                               '4-TIME FRESH'
+# Importing libraries
+import pandas as pd
+from tsfresh import extract_features, extract_relevant_features, select_features
+from tsfresh.utilities.dataframe_functions import impute, make_forecasting_frame
+from tsfresh.feature_extraction import ComprehensiveFCParameters, settings
+
+# Reading the data
+data = pd.read_csv('../input/air-passengers/AirPassengers.csv')
+
+# Some preprocessing for time component:
+data.columns = ['month','Passengers']
+data['month'] = pd.to_datetime(data['month'],infer_datetime_format=True,format='%y%m')
+data.index = data.month
+df_air = data.drop(['month'], axis = 1)
+
+# Use Forecasting frame from tsfresh for rolling forecast training
+df_shift, y_air = make_forecasting_frame(df_air["Passengers"], kind="Passengers", max_timeshift=12, rolling_direction=1)
+print(df_shift)
+
+
+# Getting Comprehensive Features
+extraction_settings = ComprehensiveFCParameters()
+X = extract_features(df_shift, column_id="id", column_sort="time", column_value="value", impute_function=impute,
+                     show_warnings=False,
+                     default_fc_parameters=extraction_settings
+                     )
+
+
+                            '5-DARTS'
+#Loading the package
+from darts import TimeSeries
+from darts.models import ExponentialSmoothing
+import matplotlib.pyplot as plt
+
+# Reading the data
+data = pd.read_csv('../input/air-passengers/AirPassengers.csv')
+series = TimeSeries.from_dataframe(data, 'Month', '#Passengers')
+print(series)
+
+
+# Splitting the series in train and validation set
+train, val = series.split_before(pd.Timestamp('19580101'))
+
+# Applying a simple Exponential Smoothing model
+model = ExponentialSmoothing()
+model.fit(train)
+
+# Getting and plotting the predictions
+prediction = model.predict(len(val))series.plot(label='actual')
+prediction.plot(label='forecast', lw=3)
+plt.legend()
