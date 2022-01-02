@@ -27,10 +27,8 @@ model.fit(X, y, epochs=150, batch_size=10)
 
 
                                 "1.1-MULTICLASS CLASSIFICATION"
-
-# define baseline model
+#BUILDING MODEL
 def baseline_model():
-    # create model
     model = Sequential()
     model.add(Dense(8, input_dim=4, activation='relu'))
     model.add(Dense(3, activation='softmax'))
@@ -51,8 +49,7 @@ print("Baseline: %.2f%% (%.2f%%)" % (results.mean() * 100, results.std() * 100))
 model = models.Sequential()
 model.add(layers.Dense(8, activation='relu', input_shape=[X_train.shape[1]]))
 model.add(layers.Dense(16, activation='relu'))
-# output layer
-model.add(layers.Dense(1))
+model.add(layers.Dense(1)) ## output layer
 
 #COMPILING MODEL
 model.compile(optimizer='rmsprop', loss='mse', metrics=['mae'])
@@ -63,3 +60,20 @@ predictions = model.predict(to_predict)
 
 #EVALUATION
 model.evaluate(X_test_scaled, y_test)
+
+
+                            "KERAS REGRESSOR"
+#BUILDING MODEL
+def BuildModel():
+ model = Sequential()
+ model.add(Dense(128, input_dim=3,activation='relu'))
+ model.add(Dense(32, activation='relu'))
+ model.add(Dense(8,activation='relu'))
+ model.add(Dense(1,activation='linear'))
+ model.compile(loss="mean_squared_error", optimizer="adam")
+ return model
+
+#FITTING AND PREDICTIONS
+regressor = KerasRegressor(build_fn=BuildModel,nb_epoch=100,batch_size=3)
+regressor.fit(x,y)
+ypred = regressor.predict(x)
