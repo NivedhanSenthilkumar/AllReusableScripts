@@ -77,3 +77,4 @@ def BuildModel():
 regressor = KerasRegressor(build_fn=BuildModel,nb_epoch=100,batch_size=3)
 regressor.fit(x,y)
 ypred = regressor.predict(x)
+
