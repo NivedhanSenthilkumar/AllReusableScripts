@@ -13,3 +13,4 @@ for i in user['USERNAME']:
     if f != None:
         likes=f.find('span',attrs={'class':'_52id _50f5 _50f7'}) #finding span tag inside class
         print(i,likes.text)
+
