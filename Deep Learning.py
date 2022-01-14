@@ -9,7 +9,11 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import KFold
 from sklearn.preprocessing import LabelEncoder
 from sklearn.pipeline import Pipeline
-
+import torch
+import torch.nn as nn
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
                                "1-CLASSIFICATION"
                             "1.1-BINARY CLASSIFICATION"
@@ -80,12 +84,6 @@ ypred = regressor.predict(x)
 
 
                             "PYTORCH REGRESSION"
-import torch
-import torch.nn as nn
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-
 N = 1000
 X = np.random.random((N, 2)) * 6 - 3  # uniformly distributed between (-3, +3)
 Y = np.cos(2 * X[:, 0]) + np.cos(3 * X[:, 1])
