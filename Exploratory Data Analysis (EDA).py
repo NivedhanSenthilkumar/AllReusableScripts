@@ -274,6 +274,44 @@ for i in catdata.columns:
 for i in numdata.columns:
     print(numdata[i].value_counts())
 
+"HIGH LEVEL DETAILS"
+    def exploratory_data_analysis(data):
+        # rows and column
+        rows = data.shape[0]
+        columns = data.shape[1]
+        # data type
+        data_type = [data.dtypes for column in data.columns]
+        # Top five rows
+        top = data.head()
+        # Last five rows
+        last = data.tail()
+        # descriptive stats
+        describe = data.describe()
+        # Missing Value
+        missing = data.isnull().sum()
+        # duplicate values
+        dups = sum(data.duplicated())
+        # Pearson Correlation
+        plt.subplots(figsize=(25, 10))
+        correlation = sns.heatmap(data.corr(), annot=True)
+        plt.subplots(figsize=(25, 10))
+        # outlier detection
+        outlier = data.boxplot();
+        # bivariate analysis
+        bivariate = sns.pairplot(data)
+        # creating a dictionary
+        eda = {'Total Rows': rows,
+               'Total Columns': columns,
+               'Data Type': data_type,
+               'Top_five': top,
+               'Last_five': last,
+               'Statistical_Summary': describe,
+               'Missing_Value': missing,
+               'Duplicate Value': dups,
+               'Correlation': correlation,
+               'Outlier Detection': outlier,
+               'Bivariate Analysis': bivariate}
+        return eda
 
                     '2.7 - Null value Finding'
 Total = data.isnull().sum().sort_values(ascending=False)
@@ -431,9 +469,7 @@ def correlation(X):
     heatmap = sns.heatmap(correlation,annot = True)
     return correlation,heatmap
 
-def visual(X):
-        distplot = sns.distplot(X.columns)
-        scatterplot = sns.scatterplot(X.columns)
+
 
 
                          'TRANSFORMATION'
@@ -586,6 +622,12 @@ numdata.boxplot()
 plt.title('Distribution of all Numeric Variables', fontsize = 15)
 plt.xticks(rotation = 'vertical', fontsize = 15)
 plt.show()
+
+
+def visual(X):
+    distplot = sns.distplot(X.columns)
+    scatterplot = sns.scatterplot(X.columns)
+    return distplot,scatterplot
 
 ----------------- ALITER------------------------------------------------------------------------------------
 row = 3
