@@ -274,6 +274,12 @@ for i in catdata.columns:
 for i in numdata.columns:
     print(numdata[i].value_counts())
 
+"PIVOT TABLE"
+pd.pivot_table(df,index=["CUSTOMERNAME","ORDERID","DELIVERYDATETIME"])
+
+"MERGE"
+
+
 "HIGH LEVEL DETAILS"
     def exploratory_data_analysis(data):
         # rows and column
@@ -417,7 +423,6 @@ scaler = QuantileTransformer()
 df_scaled = scaler.fit_transform(numdata.values)
 df_scaled = pd.DataFrame(df_scaled,columns = numdata.columns)
 
-
 #6-Unit Vector Scaler/Normalizer
 from sklearn.preprocessing import Normalizer
 scaler = Normalizer(norm = 'l2')
@@ -468,8 +473,6 @@ def correlation(X):
     correlation = X.corr()
     heatmap = sns.heatmap(correlation,annot = True)
     return correlation,heatmap
-
-
 
 
                          'TRANSFORMATION'
