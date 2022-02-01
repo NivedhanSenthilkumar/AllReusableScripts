@@ -308,3 +308,17 @@ def pdf():
     else:
         plt.show()
 
+
+## REMOVE ALL SPECIAL CHARACTERS FROM THE COLUMN
+def rep(text, chars):
+    for c in chars:
+        text = text.replace(c, '')
+    return text
+
+for word in words:
+    invalid_chars = ''
+    for c in word:
+        if (not c.isalnum()) and (c != ' '):
+            invalid_chars += c
+    clean_word = rep(word, invalid_chars)
+    print(clean_word)
