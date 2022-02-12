@@ -311,3 +311,4 @@ for word in words:
             invalid_chars += c
     clean_word = rep(word, invalid_chars)
     print(clean_word)
+
