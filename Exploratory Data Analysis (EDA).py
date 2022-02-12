@@ -689,7 +689,7 @@ r = dp.Report(
 r.publish(name='stock_report', visibility='PUBLIC')
 
 
-                               """3 - EDA Reports"""
+                               """3 - AUTOEDA Reports"""
 #Pandas Profiling
 report = pp.ProfileReport(data)
 report.to_file('profile_report.html')
