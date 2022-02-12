@@ -278,7 +278,8 @@ for i in numdata.columns:
 pd.pivot_table(df,index=["CUSTOMERNAME","ORDERID","DELIVERYDATETIME"])
 
 "MERGE"
-
+#INNER JOIN
+pd.merge(product,customer,on='Product_ID')
 
 "HIGH LEVEL DETAILS"
     def exploratory_data_analysis(data):
