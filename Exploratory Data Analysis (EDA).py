@@ -281,6 +281,9 @@ pd.pivot_table(df,index=["CUSTOMERNAME","ORDERID","DELIVERYDATETIME"])
 #INNER JOIN
 pd.merge(product,customer,on='Product_ID')
 
+#RIGHT JOIN
+pd.merge(product,customer,on='Product_ID',how='right')
+
 "HIGH LEVEL DETAILS"
     def exploratory_data_analysis(data):
         # rows and column
