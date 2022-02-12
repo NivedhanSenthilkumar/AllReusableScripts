@@ -1,4 +1,18 @@
 
+
+#Wordcloud(pdf)
+import pdfplumber
+import nltk
+from nltk.corpus import stopwords
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+from PIL import Image
+import os
+import argparse
+
+
 #Using loops to iterate through nested dictionary/list python
 def nested_loop_dict(obj):
     # Iterate over all key-value pairs of dict argument
@@ -173,17 +187,7 @@ print("decrypted string: ", decMessage)
 for i in numdata:
     numdata[i] = numdata[i].replace('-', None)
 
-#Wordcloud(pdf)
-import pdfplumber
-import nltk
-from nltk.corpus import stopwords
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud
-from PIL import Image
-import os
-import argparse
+
 
 
 def pdf():
