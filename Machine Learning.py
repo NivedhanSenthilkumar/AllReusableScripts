@@ -122,6 +122,37 @@ pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
 
 
+#Visualize Importance
+def visualize_importance(model, df_X, df_Y):
+    result = permutation_importance(model,
+                                    df_X, df_Y,
+                                    n_repeats=10, n_jobs=2,
+                                    random_state = random_seed)
+
+    sorted_idx = result.importances_mean.argsort()
+    fig, ax = plt.subplots(figsize =(20,10))
+    ax.barh(df_X.columns[sorted_idx],
+            result.importances[sorted_idx].mean(axis =1).T),
+    ax.set_title("Permutation Importances")
+    fig.tight_layout()
+    plt.show()
+    return sorted_idx
+
+
+#Partial Independence Plots
+def partial_dependence(model, df_X, sorted_idx, threshold=10):
+    fig, ax = plt.subplots(figsize=(30, 5))
+    ax.set_title("%d Most important features" % threshold)
+    plot_partial_dependence(model, df_X,
+                            df_X.columns[sorted_idx][::-1][:threshold],
+                            n_cols=threshold,
+                            n_jobs=-1,
+                            grid_resolution=100, ax=ax)
+
+
+
+
+
                               '2-FEATURE SELECTION'
 #FORWARD SELECTION
 #VERSION1
