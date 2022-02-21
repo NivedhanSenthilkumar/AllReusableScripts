@@ -2,7 +2,13 @@
 pps.predictors(train_df, "Overall_Experience")[['x', 'y', 'ppscore']]
 
 
-                       ""Feature importance""
+                            "RANKING FEATURES"
+import featurewiz as FW
+outputs = FW.featurewiz(dataname, target, corr_limit=0.70, verbose=2, sep=',',
+		header=0, test_data='',feature_engg='', category_encoders='',
+		dask_xgboost_flag=False, nrows=None)
+
+                       """Feature importance"""
 # logistic regression for feature importance
 X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
 # define the model
@@ -150,7 +156,11 @@ def partial_dependence(model, df_X, sorted_idx, threshold=10):
                             grid_resolution=100, ax=ax)
 
 
-
+                           "1-FEATURE ENGINEERING"
+feature_matrix_sessions, features_defs = ft.dfs(dataframes=dataframes,
+                                                relationships=relationships,
+                                                target_dataframe_name="sessions")
+feature_matrix_sessions.head(5)
 
 
                               '2-FEATURE SELECTION'
