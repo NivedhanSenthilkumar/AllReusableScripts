@@ -157,11 +157,33 @@ def partial_dependence(model, df_X, sorted_idx, threshold=10):
 
 
                            "1-FEATURE ENGINEERING"
+##1-FEATURE TOOLS
+import featuretools as ft
+es = ft.demo.load_retail()
+print(es)
 feature_matrix_sessions, features_defs = ft.dfs(dataframes=dataframes,
                                                 relationships=relationships,
                                                 target_dataframe_name="sessions")
-
 feature_matrix_sessions.head(5)
+
+
+#2-AUTOFEAT
+import pandas as pd
+from AutoFeat import AutoFeatRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import load_boston
+import matplotlib.pyplot as plt
+data = load_boston()
+X = data.data
+y= data.target
+X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=.3,random_state =0)
+model = AutoFeatRegressor()
+df = model.fit_transform(X, y)
+pred = model.predict(X_test)
+print("Final R^2: %.4f" % model.score(df, y))
+
+
+
 
 
                               '2-FEATURE SELECTION'
