@@ -160,6 +160,7 @@ def partial_dependence(model, df_X, sorted_idx, threshold=10):
 feature_matrix_sessions, features_defs = ft.dfs(dataframes=dataframes,
                                                 relationships=relationships,
                                                 target_dataframe_name="sessions")
+
 feature_matrix_sessions.head(5)
 
 
