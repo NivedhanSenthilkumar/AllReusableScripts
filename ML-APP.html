@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>ML API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+ <div class="login">
+	<h1>Website Order Count</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+        <input type="text" name="DAY" placeholder="DAY" required="required" />
+        <input type="text" name="MONTH" placeholder="MONTH" required="required" />
+        <input type="text" name="YEAR" placeholder="YEAR" required="required" />
+        <input type="text" name="Total-LIKES" placeholder="Total-LIKES" required="required" />
+        <input type="text" name="Total-IMPRESSIONS" placeholder="Total-IMPRESSIONS" required="required" />
+        <input type="text" name="Total-REACH" placeholder="Total-REACH" required="required" />
+        <input type="text" name="FB-IMPRESSIONS" placeholder="FB-IMPRESSIONS" required="required" />
+        <input type="text" name="IG-CLICKS TO WEBSTTE" placeholder="IG-CLICKS TO WEBSITE" required="required" />
+        <input type="text" name="GA-USERS" placeholder="GA-USERS" required="required" />
+        <input type="text" name="GA-PageDepth" placeholder="GA-PageDepth" required="required" />
+        <input type="text" name="GA-ORGANICSEARCH" placeholder="GA-ORGANICSEARCH" required="required" />
+        <input type="text" name="GA-BOUNCERATE" placeholder="GA-BOUNCERATE" required="required" />
+        <input type="text" name="FA-AMOUNT SPENT" placeholder="FA-AMOUNT SPENT" required="required" />
+        <input type="text" name="BROADCAST-YES/NO" placeholder="BROADCAST-YES/NO" required="required" />
+        <input type="text" name="BroadcastDeliverycount" placeholder="BroadcastDeliverycount" required="required" />
+        <input type="text" name="BroadcastOpencount" placeholder="BroadcastOpencount" required="required" />
+        <input type="text" name="BroadcastClickcount" placeholder="BroadcastClickcount" required="required" />
+        <button type="submit" class="btn btn-primary btn-block btn-large">PREDICT ORDER</button>
+    </form>
+
+   <br>
+   <br>
+   {{ prediction_text }}
+
+ </div>
+
+
+</body>
+</html>
