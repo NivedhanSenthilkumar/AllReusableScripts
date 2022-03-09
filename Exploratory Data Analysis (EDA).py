@@ -51,6 +51,23 @@ import seaborn as sns
 import altair as alt
 import datapane as dp
 from matplotlib.colors import ListedColormap
+%matplotlib inline
+import matplotlib.image as mpimg
+import math
+import plotly.express as px
+import plotly.graph_objects as go
+from matplotlib.offsetbox import (TextArea, DrawingArea, OffsetImage,
+                                  AnnotationBbox)
+from plotly.colors import n_colors
+from plotly.subplots import make_subplots
+from IPython.display import Image
+from colorama import Fore, Back, Style
+y_ = Fore.YELLOW
+r_ = Fore.RED
+g_ = Fore.GREEN
+b_ = Fore.BLUE
+m_ = Fore.MAGENTA
+sr_ = Style.RESET_ALL
 
 ##3-EDA Reports
 import pandas_profiling as pp
@@ -658,7 +675,15 @@ plt.yticks([])
 plt.imshow(wc);
 plt.show()
     
-    
+
+## Treemap
+r1 = df_movies.sort_values(by='IMDb', ascending=False)
+r1 = r1[0:10]
+r1['Movies']='Movies'
+fig = px.treemap(r1, path=['Movies','Title', 'Genres','Language'], values='IMDb',color='IMDb',color_continuous_scale='Purp')
+fig.show()
+
+
 
                          """DATAPANE"""
 df = pd.read_csv('https://covid.ourworldindata.org/data/vaccinations/vaccinations-by-manufacturer.csv', parse_dates=['date'])
