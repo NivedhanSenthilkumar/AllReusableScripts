@@ -214,7 +214,7 @@ pd.options.display.max_columns = None
 data = pd.read_excel('D:/ORIGINALS -COURSE ONES/SLC/Miniproject/SLC Mini Projects/SLC Mini Projects 2.0/GermanCredit.xlsx')
 print(data)
 
-'Sanity Check'
+'Dimension Check'
 print(data.dtypes)
 print(data.shape)
 print(data.size)
@@ -738,8 +738,6 @@ AV = AutoViz_Class()
 df = AV.AutoViz('car_design.csv')
 
 #Dora
-# Import required module
-from Dora import Dora
 # Create object
 dora = Dora()
 # Add dataset path as argument 
