@@ -1,4 +1,4 @@
-                           "1 - INITIALIZATION"
+                           "1 - PACKAGE INITIALIZATION"
                         """ 1.1 - PIP INSTALL """
 !pip install shapash
 !pip install pycaret
