@@ -67,6 +67,7 @@ r_ = Fore.RED
 g_ = Fore.GREEN
 b_ = Fore.BLUE
 m_ = Fore.MAGENTA
+
 sr_ = Style.RESET_ALL
 
 ##3-EDA Reports
