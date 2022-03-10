@@ -1,5 +1,5 @@
                            "1 - PACKAGE INITIALIZATION"
-                        """ 1.1 - PIP INSTALL """
+                              """ 1.1 - PIP INSTALL """
 !pip install shapash
 !pip install pycaret
 !pip install pandas_profiling
