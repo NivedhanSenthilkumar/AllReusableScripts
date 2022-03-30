@@ -1,12 +1,6 @@
-                           "Predictive Power Score"
-pps.predictors(train_df, "Overall_Experience")[['x', 'y', 'ppscore']]
 
 
-                            "RANKING FEATURES"
-import featurewiz as FW
-outputs = FW.featurewiz(dataname, target, corr_limit=0.70, verbose=2, sep=',',
-		header=0, test_data='',feature_engg='', category_encoders='',
-		dask_xgboost_flag=False, nrows=None)
+
 
                        """Feature importance"""
 # logistic regression for feature importance
@@ -245,6 +239,16 @@ signi_feat_rfe = feat_index[feat_index==1].index
 # print the significant features obtained from RFE
 print(signi_feat_rfe)
 
+"Predictive Power Score"
+pps.predictors(train_df, "Overall_Experience")[['x', 'y', 'ppscore']]
+
+"RANKING FEATURES"
+import featurewiz as FW
+outputs = FW.featurewiz(dataname, target, corr_limit=0.70, verbose=2, sep=',',
+		header=0, test_data='',feature_engg='', category_encoders='',
+		dask_xgboost_flag=False, nrows=None)
+
+
                     "HYPERPARAMETER TUNING"
 #Optuna - Randomforest
 RANDOM_SEED = 42
@@ -311,7 +315,6 @@ ypred=model1.predict(testconcat)
                          'PERFORMANCE METRICS'
 #1 - CLASSIFICATION
 #2 - REGRESSION
-
 """1.1 - LOG metrics"""
 def full_log_likelihood(w, X, y):
     score = np.dot(X, w).reshape(1, X.shape[0])
@@ -431,7 +434,7 @@ def Confusionmatrix(actualvalue, predictedvalue):
 
 
 
-                      'REGRESSION ERROR METRIC'
+                      'ERROR METRICS'
 #1-REGRESSION
 def Regressionerrormetric(model):
                                ypred = model.predict(xtest)
