@@ -8,7 +8,8 @@ from sklearn.metrics import r2_score
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import cross_validate
-# Import required libraries for machine learning classifiers
+
+#machine learning classifiers
 from sklearn.linear_model import LinearRegression
 from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestRegressor
@@ -183,7 +184,6 @@ Boosting Flag: you have 4 possible choices (default is False):
   True = This will build an XGBoost model                                                     
   CatBoost = THis will build a CatBoost model (provided you have CatBoost installed)          
 """
-
 
 print(confusion_matrix(test_df[target].values,testm['Churn_XGBoost_predictions'].values))
 print(confusion_matrix(test_df[target].values,testm['Churn_Logistic Regression_predictions'].values))
