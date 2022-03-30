@@ -407,8 +407,6 @@ def get_test_report(model):
     return (classification_report(y_test, test_pred))
 
     """ 1.5 - Calculate TP,TN,FP,FN"""
-
-
 def positivenegatives(y_actual, y_hat):
     TP = 0
     FP = 0
@@ -434,7 +432,7 @@ def Confusionmatrix(actualvalue, predictedvalue):
 
 
 
-                      'ERROR METRICS'
+                      'ERROR METRICS- CUSTOM FUNCTION'
 #1-REGRESSION
 def Regressionerrormetric(model):
                                ypred = model.predict(xtest)
