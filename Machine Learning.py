@@ -1,5 +1,9 @@
 
+"IMPORT LIBRARIES"
+from sklearn import svm, datasets
+from sklearn.model_selection import GridSearchCV
 
+                           """"SUPERVISED LEARNING"""
                            "1-FEATURE ENGINEERING"
 #1-FEATURE TOOLS
 import featuretools as ft
@@ -194,6 +198,16 @@ def tune(objective):
 randomforest_params = tune(randomforest_objective)
 
 #2-GRIDSEARCH CV
+##2.1- Support Vector Classifier
+iris = datasets.load_iris()
+parameters = {'kernel':('linear', 'rbf'), 'C':[1, 10]}
+svc = svm.SVC()
+clf = GridSearchCV(svc, parameters)
+clf.fit(iris.data, iris.target)
+GridSearchCV(estimator=SVC(),
+             param_grid={'C': [1, 10], 'kernel': ('linear', 'rbf')})
+sorted(clf.cv_results_.keys())
+
 
 
 
@@ -456,3 +470,6 @@ for i,v in enumerate(importance):
 pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
 
+
+                              """UNSUPERVISED LEARNING""""
+#1-K-MEANS CLUSTERING
