@@ -29,7 +29,7 @@ print("Final R^2: %.4f" % model.score(df, y))
 
                               '2-FEATURE SELECTION'
 #FORWARD SELECTION
-#VERSION1
+#VERSION1 - Hardcode the maximum number of features to select
 from sklearn.feature_selection import SequentialFeatureSelector
 from sklearn.neighbors import KNeighborsClassifier
 sfs = SequentialFeatureSelector(estimator=KNeighborsClassifier(n_neighbors=3),
@@ -39,7 +39,7 @@ sfs.get_support()
 sfs.get_params([deep])
 
 
-##Version2
+##Version2 - Select all the best features
 linreg = LinearRegression()
 linreg_forward = sfs(estimator=linreg, k_features = 'best', forward=True,
                      verbose=2, scoring='r2')
@@ -52,7 +52,7 @@ print(sfs_forward.k_feature_names_)
 print('\nR-Squared: ', sfs_forward.k_score_)
 
 
-#Version3
+#Version3 -  Select the best features within a particular minimum and maximum
 linreg = LinearRegression()
 linreg_forward = sfs(estimator = linreg, k_features = (5,15), forward = True,
                      verbose = 2, scoring = 'r2')
@@ -228,6 +228,8 @@ model1 = VotingRegressor([('ada', r3), ('xgboost', r1),('gbr',r2)])
 model1.fit(X,Y)
 ypred=model1.predict(testconcat)
 
+
+
                          'PERFORMANCE METRICS'
                           '1 - CLASSIFICATION'
 #1.1 - LOG metrics"""
@@ -348,8 +350,7 @@ def Classificationerrormetric(model):
         return scorecard.head(1)
 
 
-                      'ERROR METRICS- CUSTOM FUNCTION'
-#1-REGRESSION
+                            '2-REGRESSION'
 def Regressionerrormetric(model):
                                ypred = model.predict(xtest)
                                scorecard = pd.DataFrame({
