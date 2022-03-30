@@ -124,7 +124,6 @@ from h2o.automl import H2OAutoML
 
                                   '2-AUTOSKLEARN'
 #1-CLASSIFICATION
-# define and perform the search for best model
 model = AutoSklearnClassifier(time_left_for_this_task=120, per_run_time_limit=30, n_jobs=-1)
 model.fit(X_train, y_train)
 # summarize
