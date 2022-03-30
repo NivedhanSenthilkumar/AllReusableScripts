@@ -196,7 +196,6 @@ print(tpot_model.score(X_test, y_test))
 tpot_model.export('tpot_exported_pipeline.py')
 
                              '5-Lazy predict'
- '
 from lazypredict.Supervised import LazyRegressor, LazyClassifier
 
 #1-LazyClassifier Instance and fiting data
