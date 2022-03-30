@@ -108,7 +108,7 @@
 
 
                                   '2-AUTOSKLEARN'
-#import the package
+#1-CLASSIFICATION
 from autosklearn.classification import AutoSklearnClassifier
 # define and perform the search for best model
 model = AutoSklearnClassifier(time_left_for_this_task=120, per_run_time_limit=30, n_jobs=-1)
@@ -119,6 +119,14 @@ print(model.sprint_statistics())
 y_hat = model.predict(X_test)
 # to display the entire pipeline that performed the best
 model.show_models()
+
+#2-REGRESSION
+
+
+
+
+
+
 
                                   '3-AUTO-VIML'
 from __future__ import print_function
@@ -172,27 +180,21 @@ print(tpot_model.score(X_test, y_test))
 # export the corresponding Python code for the optimized pipeline to a text file
 tpot_model.export('tpot_exported_pipeline.py')
 
-                    '5-lazy predict'
+                             '5-lazy predict'
  'INSTALLATION'
 pip install lazypredict
 from lazypredict.Supervised import LazyRegressor, LazyClassifier
 
-
-                            'MODEL - Building'
-1 - Building all classifier models
-# LazyClassifier Instance and fiting data
+#1-LazyClassifier Instance and fiting data
 Classifier = LazyClassifier(ignore_warnings=False, custom_metric=None)
 models, predictions = Classifier.fit(X_train, X_test, y_train, y_test)
 
-
-
-2 - Building all regressor models
-#Lazyregressor Instance and fiting data
+#2-Lazyregressor Instance and fiting data
 reg = LazyRegressor(ignore_warnings=False, custom_metric=None)
 models, predictions = reg.fit(X_train, X_test, y_train, y_test)
 
 
-                      '6-h20'
+                                    '6-h20'
 import h2o
 h2o.init()
 from h2o.automl import H2OAutoML
@@ -245,7 +247,6 @@ train_data = task.Dataset(df=train_df)
 test_data = task.Dataset(df=test_df)
 
 print(train_data.head())
-
 print(test_data.describe())
 
 label_column = 'Churn'
