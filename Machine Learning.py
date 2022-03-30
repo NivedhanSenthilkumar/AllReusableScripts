@@ -1,155 +1,5 @@
 
 
-
-
-                       """Feature importance"""
-# logistic regression for feature importance
-X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
-# define the model
-model = LogisticRegression()
-# fit the model
-model.fit(X, y)
-# get importance
-importance = model.coef_[0]
-# summarize feature importance
-for i,v in enumerate(importance):
-	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
-pyplot.bar([x for x in range(len(importance))], importance)
-pyplot.show()
-
-
-# decision tree for feature importance on a regression problem
-# define dataset
-X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
-# define the model
-model = DecisionTreeRegressor()
-# fit the model
-model.fit(X, y)
-# get importance
-importance = model.feature_importances_
-# summarize feature importance
-for i,v in enumerate(importance):
-	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
-pyplot.bar([x for x in range(len(importance))], importance)
-pyplot.show()
-
-
-
-# decision tree for feature importance on a classification problem
-X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
-# define the model
-model = DecisionTreeClassifier()
-# fit the model
-model.fit(X, y)
-# get importance
-importance = model.feature_importances_
-# summarize feature importance
-for i,v in enumerate(importance):
-	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
-pyplot.bar([x for x in range(len(importance))], importance)
-pyplot.show()
-
-
-# random forest for feature importance on a regression problem
-# define dataset
-X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
-# define the model
-model = RandomForestRegressor()
-# fit the model
-model.fit(X, y)
-# get importance
-importance = model.feature_importances_
-# summarize feature importance
-for i,v in enumerate(importance):
-	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
-pyplot.bar([x for x in range(len(importance))], importance)
-pyplot.show()
-important_features = pd.DataFrame({'Features': X_train_xfs.columns,'Importance': xgb_model.feature_importances_})
-fe_imp=important_features.sort_values(by='Importance',ascending=False)
-
-
-# random forest for feature importance on a classification problem
-X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
-# define the model
-model = RandomForestClassifier()
-# fit the model
-model.fit(X, y)
-# get importance
-importance = model.feature_importances_
-# summarize feature importance
-for i,v in enumerate(importance):
-	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
-pyplot.bar([x for x in range(len(importance))], importance)
-pyplot.show()
-
-
-# xgboost for feature importance on a regression problem
-# define dataset
-X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
-# define the model
-model = XGBRegressor()
-# fit the model
-model.fit(X, y)
-# get importance
-importance = model.feature_importances_
-# summarize feature importance
-for i,v in enumerate(importance):
-	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
-pyplot.bar([x for x in range(len(importance))], importance)
-pyplot.show()
-
-
-# xgboost for feature importance on a classification problem
-# define dataset
-X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
-# define the model
-model = XGBClassifier()
-# fit the model
-model.fit(X, y)
-# get importance
-importance = model.feature_importances_
-# summarize feature importance
-for i,v in enumerate(importance):
-	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
-pyplot.bar([x for x in range(len(importance))], importance)
-pyplot.show()
-
-
-#Visualize Importance
-def visualize_importance(model, df_X, df_Y):
-    result = permutation_importance(model,
-                                    df_X, df_Y,
-                                    n_repeats=10, n_jobs=2,
-                                    random_state = random_seed)
-
-    sorted_idx = result.importances_mean.argsort()
-    fig, ax = plt.subplots(figsize =(20,10))
-    ax.barh(df_X.columns[sorted_idx],
-            result.importances[sorted_idx].mean(axis =1).T),
-    ax.set_title("Permutation Importances")
-    fig.tight_layout()
-    plt.show()
-    return sorted_idx
-
-
-#Partial Independence Plots
-def partial_dependence(model, df_X, sorted_idx, threshold=10):
-    fig, ax = plt.subplots(figsize=(30, 5))
-    ax.set_title("%d Most important features" % threshold)
-    plot_partial_dependence(model, df_X,
-                            df_X.columns[sorted_idx][::-1][:threshold],
-                            n_cols=threshold,
-                            n_jobs=-1,
-                            grid_resolution=100, ax=ax)
-
-
                            "1-FEATURE ENGINEERING"
 ##1-FEATURE TOOLS
 import featuretools as ft
@@ -175,9 +25,6 @@ model = AutoFeatRegressor()
 df = model.fit_transform(X, y)
 pred = model.predict(X_test)
 print("Final R^2: %.4f" % model.score(df, y))
-
-
-
 
 
                               '2-FEATURE SELECTION'
@@ -248,8 +95,72 @@ outputs = FW.featurewiz(dataname, target, corr_limit=0.70, verbose=2, sep=',',
 		header=0, test_data='',feature_engg='', category_encoders='',
 		dask_xgboost_flag=False, nrows=None)
 
+                       "3-Feature importance"""
+# random forest for feature importance on a regression problem
+X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
+# define the model
+model = RandomForestRegressor()
+# fit the model
+model.fit(X, y)
+# get importance
+importance = model.feature_importances_
+# summarize feature importance
+for i,v in enumerate(importance):
+	print('Feature: %0d, Score: %.5f' % (i,v))
+# plot feature importance
+pyplot.bar([x for x in range(len(importance))], importance)
+pyplot.show()
+important_features = pd.DataFrame({'Features': X_train_xfs.columns,'Importance': xgb_model.feature_importances_})
+fe_imp=important_features.sort_values(by='Importance',ascending=False)
 
-                    "HYPERPARAMETER TUNING"
+
+# random forest for feature importance on a classification problem
+X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
+# define the model
+model = RandomForestClassifier()
+# fit the model
+model.fit(X, y)
+# get importance
+importance = model.feature_importances_
+# summarize feature importance
+for i,v in enumerate(importance):
+	print('Feature: %0d, Score: %.5f' % (i,v))
+# plot feature importance
+pyplot.bar([x for x in range(len(importance))], importance)
+pyplot.show()
+
+
+
+#Visualize Importance
+def visualize_importance(model, df_X, df_Y):
+    result = permutation_importance(model,
+                                    df_X, df_Y,
+                                    n_repeats=10, n_jobs=2,
+                                    random_state = random_seed)
+
+    sorted_idx = result.importances_mean.argsort()
+    fig, ax = plt.subplots(figsize =(20,10))
+    ax.barh(df_X.columns[sorted_idx],
+            result.importances[sorted_idx].mean(axis =1).T),
+    ax.set_title("Permutation Importances")
+    fig.tight_layout()
+    plt.show()
+    return sorted_idx
+
+
+#Partial Independence Plots
+def partial_dependence(model, df_X, sorted_idx, threshold=10):
+    fig, ax = plt.subplots(figsize=(30, 5))
+    ax.set_title("%d Most important features" % threshold)
+    plot_partial_dependence(model, df_X,
+                            df_X.columns[sorted_idx][::-1][:threshold],
+                            n_cols=threshold,
+                            n_jobs=-1,
+                            grid_resolution=100, ax=ax)
+
+
+
+                    "4-HYPERPARAMETER TUNING"
 #Optuna - Randomforest
 RANDOM_SEED = 42
 kfolds = KFold(n_splits=10, shuffle=True, random_state=RANDOM_SEED)
@@ -469,4 +380,86 @@ rmse = np.sqrt(((ypred - ytest) ** 2).mean())
 OverallError = np.abs((ytest - ypred)),
 OverallErrorPercentage = np.abs((ytest - ypred) / (ytest)) * 100
 mape = (np.mean(np.abs((actual - predicted) / actual)) * 100)
+
+
+
+"misc"
+# logistic regression for feature importance
+X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
+# define the model
+model = LogisticRegression()
+# fit the model
+model.fit(X, y)
+# get importance
+importance = model.coef_[0]
+# summarize feature importance
+for i,v in enumerate(importance):
+	print('Feature: %0d, Score: %.5f' % (i,v))
+# plot feature importance
+pyplot.bar([x for x in range(len(importance))], importance)
+pyplot.show()
+
+
+# decision tree for feature importance on a regression problem
+X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
+# define the model
+model = DecisionTreeRegressor()
+# fit the model
+model.fit(X, y)
+# get importance
+importance = model.feature_importances_
+# summarize feature importance
+for i,v in enumerate(importance):
+	print('Feature: %0d, Score: %.5f' % (i,v))
+# plot feature importance
+pyplot.bar([x for x in range(len(importance))], importance)
+pyplot.show()
+
+# xgboost for feature importance on a regression problem
+# define dataset
+X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
+# define the model
+model = XGBRegressor()
+# fit the model
+model.fit(X, y)
+# get importance
+importance = model.feature_importances_
+# summarize feature importance
+for i,v in enumerate(importance):
+	print('Feature: %0d, Score: %.5f' % (i,v))
+# plot feature importance
+pyplot.bar([x for x in range(len(importance))], importance)
+pyplot.show()
+
+
+# xgboost for feature importance on a classification problem
+# define dataset
+X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
+# define the model
+model = XGBClassifier()
+# fit the model
+model.fit(X, y)
+# get importance
+importance = model.feature_importances_
+# summarize feature importance
+for i,v in enumerate(importance):
+	print('Feature: %0d, Score: %.5f' % (i,v))
+# plot feature importance
+pyplot.bar([x for x in range(len(importance))], importance)
+pyplot.show()
+
+# decision tree for feature importance on a classification problem
+X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
+# define the model
+model = DecisionTreeClassifier()
+# fit the model
+model.fit(X, y)
+# get importance
+importance = model.feature_importances_
+# summarize feature importance
+for i,v in enumerate(importance):
+	print('Feature: %0d, Score: %.5f' % (i,v))
+# plot feature importance
+pyplot.bar([x for x in range(len(importance))], importance)
+pyplot.show()
 
