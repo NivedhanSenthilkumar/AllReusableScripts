@@ -1,6 +1,4 @@
 
-
-
 "IMPORT LIBRARIES"
 from sklearn.metrics import make_scorer
 from sklearn.metrics import accuracy_score
@@ -201,6 +199,7 @@ print(tpot_model.score(X_test, y_test))
 # export the corresponding Python code for the optimized pipeline to a text file
 tpot_model.export('tpot_exported_pipeline.py')
 
+
                              '5-Lazy predict'
 #1-LazyClassifier
 Classifier = LazyClassifier(ignore_warnings=False, custom_metric=None)
@@ -222,7 +221,6 @@ x.remove(y)
 x.remove("customerID")
 
 aml = H2OAutoML(max_models = 10, seed = 10, exclude_algos = ["StackedEnsemble", "DeepLearning"], verbosity="info", nfolds=0)
-
 aml.train(x = x, y = y, training_frame = churn_train, validation_frame=churn_valid)
 
 lb = aml.leaderboard
@@ -236,7 +234,7 @@ model_ids = list(aml.leaderboard['model_id'].as_data_frame().iloc[:,0])
 model_ids
 h2o.get_model([mid for mid in model_ids if "XGBoost" in mid][0])
 out = h2o.get_model([mid for mid in model_ids if "XGBoost" in mid][0])
-out.params
+print(out.params)
 out.convert_H2OXGBoostParams_2_XGBoostParams()
 out
 out_gbm = h2o.get_model([mid for mid in model_ids if "GBM" in mid][0])
@@ -296,8 +294,6 @@ predictor = task.fit(train_data=train_data, tuning_data=test_data, label=label_c
                      time_limits=time_limits, num_trials=num_trials,
                      hyperparameter_tune=hp_tune, hyperparameters=hyperparameters,
                      search_strategy=search_strategy, nthreads_per_trial=1, ngpus_per_trial=1)
-
-predictor.fit_summary()
 predictor.fit_summary()
 predictor.leaderboard()
 
