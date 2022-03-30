@@ -1,6 +1,5 @@
 
-INSTALLATION'
-pip install lazypredict
+
 
                                   '1-INBUILT CUSTOM FUNCTION'
                                   from sklearn.metrics import make_scorer
