@@ -151,9 +151,6 @@ print("Train R2 score:", sklearn.metrics.r2_score(y_train, train_predictions))
 test_predictions = automl.predict(X_test)
 print("Test R2 score:", sklearn.metrics.r2_score(y_test, test_predictions))
 
-
-
-
                                   '3-AUTO-VIML'
 BASE_DIR = '/tmp'
 OUTPUT_FILE = os.path.join(BASE_DIR, 'churn_data.csv')
