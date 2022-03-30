@@ -1,30 +1,42 @@
 
 
 
-                                  '1-INBUILT CUSTOM FUNCTION'
-                                  from sklearn.metrics import make_scorer
-                                  from sklearn.metrics import accuracy_score
-                                  from sklearn.metrics import r2_score
-                                  from sklearn.metrics import mean_squared_error
-                                  from sklearn.metrics import mean_absolute_error
-                                  from sklearn.model_selection import cross_validate
+"IMPORT LIBRARIES"
+from sklearn.metrics import make_scorer
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import r2_score
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import cross_validate
+# Import required libraries for machine learning classifiers
+from sklearn.linear_model import LinearRegression
+from sklearn.svm import SVR
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.tree import DecisionTreeRegressor
+from lightgbm import LGBMRegressor
+from sklearn.linear_model import Ridge
+from sklearn.linear_model import Lasso
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.metrics import classification_report, confusion_matrix
 
+##PURE AUTOML
+from lazypredict.Supervised import LazyRegressor, LazyClassifier
+from autosklearn.classification import AutoSklearnClassifier
+from __future__ import print_function
+import sys,tempfile, urllib, os
+from autoviml.Auto_ViML import Auto_ViML
+
+
+
+                                  '1-INBUILT CUSTOM FUNCTION'
                                   # Define dictionary with performance metrics
                                   scoring = {
                                       'R2-Square': make_scorer(r2_score),
                                       'MSE': make_scorer(mean_squared_error),
                                       'MAE': make_scorer(mean_absolute_error)}
 
-                                  # Import required libraries for machine learning classifiers
-                                  from sklearn.linear_model import LinearRegression
-                                  from sklearn.svm import SVR
-                                  from sklearn.ensemble import RandomForestRegressor
-                                  from sklearn.ensemble import GradientBoostingRegressor
-                                  from sklearn.tree import DecisionTreeRegressor
-                                  from lightgbm import LGBMRegressor
-                                  from sklearn.linear_model import Ridge
-                                  from sklearn.linear_model import Lasso
-                                  from sklearn.neighbors import KNeighborsRegressor
+
 
                                   # Instantiate the machine learning classifiers
                                   lin_model = LinearRegression()
@@ -111,7 +123,6 @@
 
                                   '2-AUTOSKLEARN'
 #1-CLASSIFICATION
-from autosklearn.classification import AutoSklearnClassifier
 # define and perform the search for best model
 model = AutoSklearnClassifier(time_left_for_this_task=120, per_run_time_limit=30, n_jobs=-1)
 model.fit(X_train, y_train)
@@ -143,10 +154,6 @@ print("Test R2 score:", sklearn.metrics.r2_score(y_test, test_predictions))
 
 
                                   '3-AUTO-VIML'
-from __future__ import print_function
-import sys,tempfile, urllib, os
-import pandas as pd
-
 BASE_DIR = '/tmp'
 OUTPUT_FILE = os.path.join(BASE_DIR, 'churn_data.csv')
 churn_data=urllib.request.urlretrieve('https://raw.githubusercontent.com/srivatsan88/YouTubeLI/master/dataset/WA_Fn-UseC_-Telco-Customer-Churn.csv', OUTPUT_FILE)
@@ -156,7 +163,7 @@ size = int(0.7*churn_df.shape[0])
 train_df = churn_df[:size]
 test_df = churn_df[size:]
 
-from autoviml.Auto_ViML import Auto_ViML
+
 target='Churn'
 model, features, trainm, testm = Auto_ViML(train_df, target, test_df, sample_submission='',
                                     scoring_parameter='',
@@ -175,7 +182,7 @@ Boosting Flag: you have 4 possible choices (default is False):
   CatBoost = THis will build a CatBoost model (provided you have CatBoost installed)          
 """
 
-from sklearn.metrics import classification_report, confusion_matrix
+
 print(confusion_matrix(test_df[target].values,testm['Churn_XGBoost_predictions'].values))
 print(confusion_matrix(test_df[target].values,testm['Churn_Logistic Regression_predictions'].values))
 print(confusion_matrix(test_df[target].values,testm['Churn_Ensembled_predictions'].values))
@@ -184,7 +191,6 @@ print(classification_report(test_df[target].values,testm['Churn_Ensembled_predic
 
 
                       '4-TPOT'
-pip install tpot
 from tpot import TPOTClassifier
 # define and perform the search for best model
 tpot_model = TPOTClassifier(generations=5, population_size=20, cv=5, random_state=42, verbosity=2)
@@ -195,8 +201,6 @@ print(tpot_model.score(X_test, y_test))
 tpot_model.export('tpot_exported_pipeline.py')
 
                              '5-Lazy predict'
-from lazypredict.Supervised import LazyRegressor, LazyClassifier
-
 #1-LazyClassifier Instance and fiting data
 Classifier = LazyClassifier(ignore_warnings=False, custom_metric=None)
 models, predictions = Classifier.fit(X_train, X_test, y_train, y_test)
