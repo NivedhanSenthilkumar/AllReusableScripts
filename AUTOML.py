@@ -202,11 +202,11 @@ print(tpot_model.score(X_test, y_test))
 tpot_model.export('tpot_exported_pipeline.py')
 
                              '5-Lazy predict'
-#1-LazyClassifier Instance and fiting data
+#1-LazyClassifier
 Classifier = LazyClassifier(ignore_warnings=False, custom_metric=None)
 models, predictions = Classifier.fit(X_train, X_test, y_train, y_test)
 
-#2-Lazyregressor Instance and fiting data
+#2-Lazyregressor
 reg = LazyRegressor(ignore_warnings=False, custom_metric=None)
 models, predictions = reg.fit(X_train, X_test, y_train, y_test)
 
