@@ -224,9 +224,8 @@ model1.fit(X,Y)
 ypred=model1.predict(testconcat)
 
                          'PERFORMANCE METRICS'
-#1 - CLASSIFICATION
-#2 - REGRESSION
-"""1.1 - LOG metrics"""
+                          '1 - CLASSIFICATION'
+#1.1 - LOG metrics"""
 def full_log_likelihood(w, X, y):
     score = np.dot(X, w).reshape(1, X.shape[0])
     return np.sum(-np.log(1 + np.exp(score))) + np.sum(y * score)
@@ -301,23 +300,12 @@ for cut_off in range(10, 100):
     i += 1
 
 #Classfication Report
-# create a generalized function to calculate the metrics values for train set
-def get_train_report(model):
-    # for training set:
-    # train_pred: prediction made by the model on the train dataset 'X_train'
-    # y_train: actual values of the target variable for the train dataset
-    # predict the output of the target variable from the train data
-    train_pred = model.predict(X_train)
-    # return the performace measures on train set
-    return (classification_report(y_train, train_pred))
-
-
-# create a generalized function to calculate the metrics values for test set
 def get_test_report(model):
     test_pred = model.predict(X_test)
     return (classification_report(y_test, test_pred))
 
-    """ 1.5 - Calculate TP,TN,FP,FN"""
+
+#Calculate TP,TN,FP,FN
 def positivenegatives(y_actual, y_hat):
     TP = 0
     FP = 0
@@ -335,13 +323,24 @@ def positivenegatives(y_actual, y_hat):
     return (TP, FP, TN, FN)
 
 
-                     'CONFUSION MATRIX'
+#CONFUSION MATRIX
 def Confusionmatrix(actualvalue, predictedvalue):
     cm = confusion_matrix(actualvalue, predictedvalue)
     hm = sns.heatmap(cm)
     return cm, hm
 
-
+#Custom Function
+def Classificationerrormetric(model):
+                               ypred = model.predict(xtest)
+                               scorecard = pd.DataFrame({
+            'Accuracy': sklearn.metrics.accuracy_score(ytest, ypred),
+            'Area Under Curve': sklearn.metrics.roc_curve(ytest, ypred),
+            'F1': sklearn.metrics.f1_score(ytest, ypred),
+            'Recall': sklearn.metrics.recall_score(ytest, ypred),
+            'Precision': sklearn.metrics.precision_score(ytest, ypred),
+            'Log Loss': sklearn.metrics.log_loss(ytest, ypred)},
+            index=['ERROR', 'ACCURACY', 'ROC-AUC', 'F1', 'Recall', 'Precision', 'LogLoss'])
+        return scorecard.head(1)
 
                       'ERROR METRICS- CUSTOM FUNCTION'
 #1-REGRESSION
@@ -358,20 +357,6 @@ def Regressionerrormetric(model):
             'Overall Error Percentage': (np.abs((ytest - ypred) / (ytest)).sum()) * 100},
             index=['ERROR', 'MAE', 'MSE', 'RMSE', 'MAPE', 'MSLE', 'RMSLE', 'OE', 'OEP'])
         return scorecard.head(1)
-
-#2-CLASSIFICATION
-def Classificationerrormetric(model):
-    ypred = model.predict(xtest)
-    scorecard = pd.DataFrame({
-            'Accuracy': sklearn.metrics.accuracy_score(ytest, ypred),
-            'Area Under Curve': sklearn.metrics.roc_curve(ytest,ypred),
-            'F1': sklearn.metrics.f1_score(ytest,ypred),
-            'Recall': sklearn.metrics.recall_score(ytest,ypred),
-            'Precision': sklearn.metrics.precision_score(ytest,ypred),
-            'Log Loss': sklearn.metrics.log_loss(ytest,ypred)},
-            index=['ERROR', 'ACCURACY', 'ROC-AUC', 'F1', 'Recall', 'Precision', 'LogLoss'])
-        return scorecard.head(1)
-
 
 
                          'General Formulas'
