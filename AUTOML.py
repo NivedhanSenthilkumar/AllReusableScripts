@@ -267,7 +267,6 @@ label_column = 'Churn'
 train_data[label_column].describe()
 
 predictor = task.fit(train_data=train_data, label=label_column, eval_metric='accuracy')
-
 y_test = test_data[label_column]
 
 test_data_nolab = test_data.drop(labels=[label_column],axis=1)
