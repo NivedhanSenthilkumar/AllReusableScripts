@@ -464,6 +464,7 @@ def Classificationerrormetric(model):
         return scorecard.head(1)
 
 
+
                          'General Formulas'
 mape = mean_absolute_error(Y_actual, Y_Predicted) * 100
 rmse = np.sqrt(((ypred - ytest) ** 2).mean())
