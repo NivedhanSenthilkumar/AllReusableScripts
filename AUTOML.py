@@ -26,7 +26,9 @@ from autosklearn.classification import AutoSklearnClassifier
 from __future__ import print_function
 import sys,tempfile, urllib, os
 from autoviml.Auto_ViML import Auto_ViML
-
+from tpot import TPOTClassifier
+import h2o
+from h2o.automl import H2OAutoML
 
 
                                   '1-INBUILT CUSTOM FUNCTION'
@@ -191,7 +193,6 @@ print(classification_report(test_df[target].values,testm['Churn_Ensembled_predic
 
 
                       '4-TPOT'
-from tpot import TPOTClassifier
 # define and perform the search for best model
 tpot_model = TPOTClassifier(generations=5, population_size=20, cv=5, random_state=42, verbosity=2)
 tpot_model.fit(X_train, y_train)
@@ -211,11 +212,8 @@ models, predictions = reg.fit(X_train, X_test, y_train, y_test)
 
 
                                     '6-h20'
-import h2o
 h2o.init()
-from h2o.automl import H2OAutoML
 churn_df = h2o.import_file('https://raw.githubusercontent.com/srivatsan88/YouTubeLI/master/dataset/WA_Fn-UseC_-Telco-Customer-Churn.csv')
-
 churn_train,churn_test,churn_valid = churn_df.split_frame(ratios=[.7, .15])
 
 y = "Churn"
