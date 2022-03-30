@@ -1,7 +1,7 @@
 
 
                            "1-FEATURE ENGINEERING"
-##1-FEATURE TOOLS
+#1-FEATURE TOOLS
 import featuretools as ft
 es = ft.demo.load_retail()
 print(es)
@@ -86,17 +86,18 @@ signi_feat_rfe = feat_index[feat_index==1].index
 # print the significant features obtained from RFE
 print(signi_feat_rfe)
 
-"Predictive Power Score"
+
+                       "3-Feature importance"""
+#1-Predictive Power Score
 pps.predictors(train_df, "Overall_Experience")[['x', 'y', 'ppscore']]
 
-"RANKING FEATURES"
+#2-RANKING FEATURES
 import featurewiz as FW
 outputs = FW.featurewiz(dataname, target, corr_limit=0.70, verbose=2, sep=',',
 		header=0, test_data='',feature_engg='', category_encoders='',
 		dask_xgboost_flag=False, nrows=None)
 
-                       "3-Feature importance"""
-# random forest for feature importance on a regression problem
+#3-FEATURE IMPORTANC PLOT (REGRESSION,CLASSIFICATION)
 X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
 # define the model
 model = RandomForestRegressor()
@@ -114,7 +115,6 @@ important_features = pd.DataFrame({'Features': X_train_xfs.columns,'Importance':
 fe_imp=important_features.sort_values(by='Importance',ascending=False)
 
 
-# random forest for feature importance on a classification problem
 X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
 # define the model
 model = RandomForestClassifier()
@@ -131,7 +131,7 @@ pyplot.show()
 
 
 
-#Visualize Importance
+#4-Visualize Importance
 def visualize_importance(model, df_X, df_Y):
     result = permutation_importance(model,
                                     df_X, df_Y,
@@ -148,7 +148,7 @@ def visualize_importance(model, df_X, df_Y):
     return sorted_idx
 
 
-#Partial Independence Plots
+#5-Partial Independence Plots
 def partial_dependence(model, df_X, sorted_idx, threshold=10):
     fig, ax = plt.subplots(figsize=(30, 5))
     ax.set_title("%d Most important features" % threshold)
@@ -161,7 +161,7 @@ def partial_dependence(model, df_X, sorted_idx, threshold=10):
 
 
                     "4-HYPERPARAMETER TUNING"
-#Optuna - Randomforest
+#1-Optuna - Randomforest
 RANDOM_SEED = 42
 kfolds = KFold(n_splits=10, shuffle=True, random_state=RANDOM_SEED)
 def randomforest_objective(trial):
@@ -192,6 +192,11 @@ def tune(objective):
 
 ##Apply Functions
 randomforest_params = tune(randomforest_objective)
+
+#2-GRIDSEARCH CV
+
+
+
 
 
                     """ENSEMBLE MODELLING"""
@@ -341,6 +346,7 @@ def Classificationerrormetric(model):
             'Log Loss': sklearn.metrics.log_loss(ytest, ypred)},
             index=['ERROR', 'ACCURACY', 'ROC-AUC', 'F1', 'Recall', 'Precision', 'LogLoss'])
         return scorecard.head(1)
+
 
                       'ERROR METRICS- CUSTOM FUNCTION'
 #1-REGRESSION
