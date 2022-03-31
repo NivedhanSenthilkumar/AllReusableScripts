@@ -520,3 +520,40 @@ pyplot.show()
 
                               """UNSUPERVISED LEARNING""""
 #1-K-MEANS CLUSTERING
+df_scaled = df2.apply(zscore)
+#NOTE : (For Kmeans scaling is a must)
+
+#Cluster Errors
+cluster_range = range( 1, 15 )
+cluster_errors = []
+for num_clusters in cluster_range:
+  clusters = KMeans( num_clusters, n_init = 10 )
+  clusters.fit(df_scaled)
+  labels = clusters.labels_
+  centroids = clusters.cluster_centers_
+  cluster_errors.append( clusters.inertia_ )
+clusters_df = pd.DataFrame( { "num_clusters":cluster_range, "cluster_errors": cluster_errors } )
+clusters_df[0:15]
+#NOTE : The total sum of squared distances of every data point from respective centroid is also called inertia. Let us print the inertia value for all K values.
+
+# Elbow plot
+plt.figure(figsize=(12,6))
+plt.plot( clusters_df.num_clusters, clusters_df.cluster_errors, marker = "o" )
+#NOTE : That K at which the inertia stop to drop significantly (elbow method) will be the best K.
+
+
+#Fitting the Model
+kmeans = KMeans(n_clusters=3, n_init = 15, random_state=2345)
+kmeans.fit(df_scaled)
+centroids = kmeans.cluster_centers_
+print(centroids)
+
+centroid_df = pd.DataFrame(centroids, columns = list(df_scaled) )
+centroid_df.index.name = 'Label'
+centroid_df.reset_index()
+
+## creating a new dataframe only for labels and converting it into categorical variable
+df_labels = pd.DataFrame(kmeans.labels_ , columns = list(['labels']))
+df_labels['labels'] = df_labels['labels'].astype('category')
+
+
