@@ -193,7 +193,6 @@ def tune(objective):
     best_score = study.best_value
     print(f"Best score: {best_score} \nOptimized parameters: {params}")
     return params
-
 randomforest_params = tune(randomforest_objective)#Calling the function
 
 #2-GRIDSEARCH CV
@@ -229,6 +228,11 @@ grid_tree = GridSearchCV(estimator = DecisionTreeClassifier(),
                         n_jobs = -1)
 grid_tree.fit(X_train,y_train)
 print("Decision Tree best estimator : \n",grid_tree.best_estimator_)
+
+#3-SKOPT
+
+
+
 
 
                     """ENSEMBLE MODELLING"""
