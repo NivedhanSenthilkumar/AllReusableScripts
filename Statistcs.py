@@ -1,7 +1,5 @@
 
 
-coef = ols.stats()
-
 
                               """1-ANOVA TEST"""
 # Defining a function to find the statistical relationship with all the categorical variables
@@ -58,3 +56,10 @@ CategoricalVariables=['Term', 'Grade', 'Employment Duration', 'Verification Stat
 FunctionChisq(inpData=LoanData,
               TargetVariable='Loan Status',
               CategoricalVariablesList= CategoricalVariables)
+
+                                """3-CORRELATION"""
+#1-PEARSON
+df.corr()
+
+#2-SPEARMAN
+df.corr(method='spearman')
