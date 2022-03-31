@@ -194,8 +194,7 @@ def tune(objective):
     print(f"Best score: {best_score} \nOptimized parameters: {params}")
     return params
 
-##Apply Functions
-randomforest_params = tune(randomforest_objective)
+randomforest_params = tune(randomforest_objective)#Calling the function
 
 #2-GRIDSEARCH CV
 ##2.1- Support Vector Classifier
@@ -208,9 +207,28 @@ GridSearchCV(estimator=SVC(),
              param_grid={'C': [1, 10], 'kernel': ('linear', 'rbf')})
 sorted(clf.cv_results_.keys())
 
+##2.2-XGB CLASSIFIER
+from sklearn.model_selection import GridSearchCV
+estimator = XGBClassifier(objective= 'binary:logistic',seed=42)
+parameters = {'max_depth': range (2, 10, 1),
+              'n_estimators': range(50, 200, 100),
+              'learning_rate': [0.1, 0.01, 0.05]}
+grid_search = GridSearchCV(estimator=estimator,param_grid=parameters,scoring = 'roc_auc',n_jobs = 10,cv = 10,verbose=True)
+grid_search.fit(X_smote, y_smote)
+grid_search.best_estimator_
 
-
-
+##2.3-DECISION TREE CLASSIFIER
+tree_params = {"criterion": ["gini", "entropy"],
+               "max_depth": list(range(2,4,1)),
+               "min_samples_leaf": list(range(5,7,1))}
+grid_tree = GridSearchCV(estimator = DecisionTreeClassifier(),
+                        param_grid = tree_params,
+                        scoring = 'accuracy',
+                        cv = 5,
+                        verbose = 1,
+                        n_jobs = -1)
+grid_tree.fit(X_train,y_train)
+print("Decision Tree best estimator : \n",grid_tree.best_estimator_)
 
 
                     """ENSEMBLE MODELLING"""
@@ -242,7 +260,32 @@ model1 = VotingRegressor([('ada', r3), ('xgboost', r1),('gbr',r2)])
 model1.fit(X,Y)
 ypred=model1.predict(testconcat)
 
+#2-VOTING CLASSIFIER
+r1 = lgb.LGBMClassifier(bagging_fraction=0.9, bagging_freq=3, boosting_type='gbdt',
+               class_weight=None, colsample_bytree=1.0, feature_fraction=0.4,
+               importance_type='split', learning_rate=0.001, max_depth=-1,
+               min_child_samples=11, min_child_weight=0.001, min_split_gain=0,
+               n_estimators=10, n_jobs=-1, num_leaves=60, objective=None,
+               random_state=6122, reg_alpha=10, reg_lambda=0.4, silent=True,
+               subsample=1.0, subsample_for_bin=200000, subsample_freq=0)
 
+r2 = GradientBoostingClassifier(ccp_alpha=0.0, criterion='friedman_mse', init=None,
+                           learning_rate=0.05, loss='deviance', max_depth=3,
+                           max_features=1.0, max_leaf_nodes=None,
+                           min_impurity_decrease=0.01,
+                           min_samples_leaf=3, min_samples_split=4,
+                           min_weight_fraction_leaf=0.0, n_estimators=50,
+                           n_iter_no_change=None,
+                           random_state=6122, subsample=0.4, tol=0.0001,
+                           validation_fraction=0.1, verbose=0,
+                           warm_start=False)
+
+r3 = AdaBoostClassifier(algorithm='SAMME', base_estimator=None, learning_rate=0.0001,
+                   n_estimators=50, random_state=6122)
+
+model1 = VotingClassifier([('ada', r3), ('lgbm', r1),('gbc',r2)])
+model1.fit(X,Y)
+ypred=model1.predict(XTEST)
 
                          'PERFORMANCE METRICS'
                           '1 - CLASSIFICATION'
