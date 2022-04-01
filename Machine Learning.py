@@ -557,3 +557,4 @@ df_labels = pd.DataFrame(kmeans.labels_ , columns = list(['labels']))
 df_labels['labels'] = df_labels['labels'].astype('category')
 
 
+#2-PRINCIPAL COMPONENT ANALYSIS
