@@ -4,6 +4,12 @@ import pandas as pd
 import numpy as np
 from scipy.sparse import csr_matrix
 from scipy.sparse.linalg import svds
+from numpy import dot
+from numpy.linalg import norm
+from sklearn.metrics.pairwise import cosine_similarity
+from surprise import SVD, Reader, Dataset, accuracy
+from surprise.model_selection import train_test_split
+
 
 
                               """1-USER BASED RECEOMMENDATION SYSTEMS"""
@@ -89,11 +95,6 @@ if __name__ == '__main__':
 
 
                             """2-CONTENT BASED RECEOMMENDATION SYSTEMS"""
-import pandas as pd
-import numpy as np
-from numpy import dot
-from numpy.linalg import norm
-
 
 def normalize(data):
     '''
@@ -184,10 +185,6 @@ if __name__ == '__main__':
 
 
                               """3-HYBRID RECOMMENDATION SYSTEMS"""
-from sklearn.metrics.pairwise import cosine_similarity
-from surprise import SVD, Reader, Dataset, accuracy
-from surprise.model_selection import train_test_split
-
 
 def hybrid(reader_id, book_id, n_recs, df, cosine_sim, svd_model):
     '''
