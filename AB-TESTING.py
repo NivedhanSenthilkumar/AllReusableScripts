@@ -1,4 +1,5 @@
 
+"""LIBRARIES"""
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -118,3 +119,25 @@ def plot_pval(distribution, t_val, xlims=(-5, 5), ylims=(0, 0.5)):
     ax.set_ylabel("prob denisty")
     f.tight_layout()
     return f, ax
+
+
+                                         """2.1-Z-test """"
+#The Z-test can be applied under the following assumptions.The observations are normally distributed (or the sample size is large).The sampling distributions have known variance σ_X and σ_Y.Under the above assumptions, the Z-test relies on the observation that the following Z statistic has a standard normal distribution.
+
+# Known standard deviations
+s_x = 100
+s_y = 90
+
+# Z value
+z_val = (x.mean() - y.mean()) / np.sqrt(s_x**2/n_x + s_y**2/n_y)
+
+# Test statistic distribution under null hypothesis H0
+stat_distrib = norm(loc=0, scale=1)
+
+# p-value
+p_val = stat_distrib.cdf(z_val) * 2
+
+print("- Z-test:")
+print(f"   - z value: {z_val:.3f}")
+print(f"   - p-value: {p_val*100:.1f}%")
+plot_pval(stat_distrib, z_val);
