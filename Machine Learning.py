@@ -13,7 +13,6 @@ cdf = pd.DataFrame(regression.coef_, X.columns, columns=['Coefficients'])
 print(cdf)
 
 ## Determine the coefficients,Intercept and Slope
-# Create an instance of a linear regression model and fit it to the data with the fit() function:
 model = LinearRegression().fit(x, y)
 # The following section will get results by interpreting the created instance:
 # Obtain the coefficient of determination by calling the model with the score() function, then print the coefficient:
@@ -261,7 +260,7 @@ print("Decision Tree best estimator : \n",grid_tree.best_estimator_)
 
 
 
-                    """ENSEMBLE MODELLING"""
+                                    """ENSEMBLE MODELLING"""
 #1-VOTING REGRESSOR
 r1 = xg.XGBRegressor(base_score=0.5, booster='gbtree', colsample_bylevel=1,
              colsample_bynode=1, colsample_bytree=1, gamma=0, gpu_id=-1,
@@ -272,7 +271,6 @@ r1 = xg.XGBRegressor(base_score=0.5, booster='gbtree', colsample_bylevel=1,
              objective='reg:squarederror', random_state=7685, reg_alpha=3,
              reg_lambda=5, scale_pos_weight=42.80000000000001, subsample=0.2,
              tree_method='auto', validate_parameters=1, verbosity=0)
-
 r2 = GradientBoostingRegressor(alpha=0.9, ccp_alpha=0.0, criterion='friedman_mse',
                           init=None, learning_rate=0.1, loss='ls', max_depth=4,
                           max_features=1.0, max_leaf_nodes=None,
@@ -282,13 +280,13 @@ r2 = GradientBoostingRegressor(alpha=0.9, ccp_alpha=0.0, criterion='friedman_mse
                           n_iter_no_change=None, presort='deprecated',
                           random_state=7685, subsample=0.25, tol=0.0001,
                           validation_fraction=0.1, verbose=0, warm_start=False)
-
 r3 = AdaBoostRegressor(base_estimator=None, learning_rate=0.0005, loss='linear',
                   n_estimators=140, random_state=7685)
 
 model1 = VotingRegressor([('ada', r3), ('xgboost', r1),('gbr',r2)])
 model1.fit(X,Y)
 ypred=model1.predict(testconcat)
+
 
 #2-VOTING CLASSIFIER
 r1 = lgb.LGBMClassifier(bagging_fraction=0.9, bagging_freq=3, boosting_type='gbdt',
