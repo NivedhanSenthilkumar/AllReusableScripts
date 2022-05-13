@@ -1,4 +1,5 @@
 
+
 "IMPORT LIBRARIES"
 from sklearn import svm, datasets
 from sklearn.model_selection import GridSearchCV
@@ -11,10 +12,7 @@ from sklearn.linear_model import LinearRegression
 cdf = pd.DataFrame(regression.coef_, X.columns, columns=['Coefficients'])
 print(cdf)
 
-# Create a numpy array of data:
-x = np.array([6, 16, 26, 36, 46, 56]).reshape((-1, 1))
-y = np.array([4, 23, 10, 12, 22, 35])
-
+## Determine the coefficients,Intercept and Slope
 # Create an instance of a linear regression model and fit it to the data with the fit() function:
 model = LinearRegression().fit(x, y)
 # The following section will get results by interpreting the created instance:
@@ -25,6 +23,12 @@ print('coefficient of determination:', r_sq)
 print('intercept:', model.intercept_)
 # Print the Slope:
 print('slope:', model.coef_)
+
+                                "2-CLASSIFICATION"
+#Odds ratio
+
+
+
 
 
                            """"SUPERVISED LEARNING"""
@@ -156,8 +160,6 @@ for i,v in enumerate(importance):
 # plot feature importance
 pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
-
-
 
 #4-Visualize Importance
 def visualize_importance(model, df_X, df_Y):
