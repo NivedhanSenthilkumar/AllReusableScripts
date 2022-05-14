@@ -580,5 +580,49 @@ centroid_df.reset_index()
 df_labels = pd.DataFrame(kmeans.labels_ , columns = list(['labels']))
 df_labels['labels'] = df_labels['labels'].astype('category')
 
+def elbow_method(X):
+    distortions = []
+    inertias = []
+    mapping1 = {}
+    mapping2 = {}
+    K = range(2,10)
+
+    for k in K:
+        kmeans = KMeans(n_clusters=k)
+        kmeans.fit(X)
+
+        distortions.append(sum(np.min(cdist(X, kmeans.cluster_centers_,
+                          'euclidean'),axis=1)) / X.shape[0])
+        inertias.append(kmeans.inertia_)
+
+        mapping1[k] = sum(np.min(cdist(X, kmeans.cluster_centers_,
+                     'euclidean'),axis=1)) / X.shape[0]
+        mapping2[k] = kmeans.inertia_
+
+    print("Distortion")
+    for key,val in mapping1.items():
+        print(str(key)+' : '+str(val))
+
+    print("Inertia")
+    for key,val in mapping2.items():
+        print(str(key)+' : '+str(val))
+
+    plt.plot(K, distortions, 'bx-',color=custom_colors[3])
+    plt.xlabel('Values of K')
+    plt.ylabel('Distortion')
+    plt.xticks(K)
+    plt.title('Elbow Method using Distortion')
+    plt.show()
+
+    plt.plot(K, inertias, 'bx-',color=custom_colors[4])
+    plt.xlabel('Values of K')
+    plt.ylabel('Inertia')
+    plt.xticks(K)
+    plt.title('Elbow Method using Inertia')
+    plt.show()
+
+
+
+
 
 #2-PRINCIPAL COMPONENT ANALYSIS
