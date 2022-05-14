@@ -626,8 +626,6 @@ for i in numdata:
     plt.show()
     plt.figure(figsize=(20,20))
 
-
-
 # 2 -Countplot
 row = 3
 col = 1
@@ -677,11 +675,31 @@ plt.imshow(wc);
 plt.show()
     
 
-## Treemap
+##5- Treemap
 r1 = df_movies.sort_values(by='IMDb', ascending=False)
 r1 = r1[0:10]
 r1['Movies']='Movies'
 fig = px.treemap(r1, path=['Movies','Title', 'Genres','Language'], values='IMDb',color='IMDb',color_continuous_scale='Purp')
+fig.show()
+
+##6-TRIPLE PLOT
+def triple_plot(x, title,c):
+    fig, ax = plt.subplots(3,1,figsize=(20,12),sharex=True)
+    sns.distplot(x, ax=ax[0],color=c)
+    ax[0].set(xlabel=None)
+    ax[0].set_title('Histogram + KDE')
+    sns.boxplot(x, ax=ax[1],color=c)
+    ax[1].set(xlabel=None)
+    ax[1].set_title('Boxplot')
+    sns.violinplot(x, ax=ax[2],color=c)
+    ax[2].set(xlabel=None)
+    ax[2].set_title('Violin plot')
+    fig.suptitle(title, fontsize=25)
+    plt.tight_layout(pad=3.0)
+    plt.show()
+
+##7-Sunburst
+fig = px.sunburst(batsmen, path=['Batting_Hand', 'cluster'], color='cluster')
 fig.show()
 
 
