@@ -1,12 +1,5 @@
 
 
-"IMPORT LIBRARIES"
-from sklearn import svm, datasets
-from sklearn.model_selection import GridSearchCV
-import numpy as np
-from sklearn.linear_model import LinearRegression
-
-
                             "MODEL INTERPRETABILITY - BASELINE MODELLING"
                                             "1-REGRESSION"
 cdf = pd.DataFrame(regression.coef_, X.columns, columns=['Coefficients'])
@@ -119,44 +112,42 @@ print(signi_feat_rfe)
 
 
                        "3-Feature importance"""
-#1-Predictive Power Score
+#3.1-Predictive Power Score
 pps.predictors(train_df, "Overall_Experience")[['x', 'y', 'ppscore']]
+pps.matrix(df) #predictive power score matrix
 
-#2-RANKING FEATURES
+#Predictive Powerscore Heatmap
+def heatmap(df):
+    ax = sns.heatmap(df, vmin=0, vmax=1, cmap="Blues", linewidths=0.5, annot=True)
+    ax.set_title('PPS matrix')
+    ax.set_xlabel('feature')
+    ax.set_ylabel('target')
+    return ax
+
+#3.2-RANKING FEATURES
 import featurewiz as FW
 outputs = FW.featurewiz(dataname, target, corr_limit=0.70, verbose=2, sep=',',
 		header=0, test_data='',feature_engg='', category_encoders='',
 		dask_xgboost_flag=False, nrows=None)
 
-#3-FEATURE IMPORTANC PLOT (REGRESSION,CLASSIFICATION)
-X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
-# define the model
+#3.3-FEATURE IMPORTANC PLOT (REGRESSION,CLASSIFICATION)
+#REGRESSION
 model = RandomForestRegressor()
-# fit the model
 model.fit(X, y)
-# get importance
 importance = model.feature_importances_
-# summarize feature importance
 for i,v in enumerate(importance):
 	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
 pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
 important_features = pd.DataFrame({'Features': X_train_xfs.columns,'Importance': xgb_model.feature_importances_})
 fe_imp=important_features.sort_values(by='Importance',ascending=False)
 
-
-X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
-# define the model
+#CLASSIFICATION
 model = RandomForestClassifier()
-# fit the model
 model.fit(X, y)
-# get importance
 importance = model.feature_importances_
-# summarize feature importance
 for i,v in enumerate(importance):
 	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
 pyplot.bar([x for x in range(len(importance))], importance)
 pyplot.show()
 
@@ -186,8 +177,6 @@ def partial_dependence(model, df_X, sorted_idx, threshold=10):
                             n_cols=threshold,
                             n_jobs=-1,
                             grid_resolution=100, ax=ax)
-
-
 
                     "4-HYPERPARAMETER TUNING"
 #1-Optuna - Randomforest
