@@ -33,7 +33,7 @@ from h2o.automl import H2OAutoML
                                   '1-INBUILT CUSTOM FUNCTION'
 #1.1 - REGRESSION
 scoring = {'R2-Square': make_scorer(r2_score),
-         'MSE': make_scorer(mean_squared_error),
+           'MSE': make_scorer(mean_squared_error),
            'MAE': make_scorer(mean_absolute_error)}
 
 # Instantiate the machine learning classifiers
