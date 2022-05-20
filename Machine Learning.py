@@ -110,6 +110,23 @@ signi_feat_rfe = feat_index[feat_index==1].index
 # print the significant features obtained from RFE
 print(signi_feat_rfe)
 
+                        "COMMON FEATURES AMONG ALL FEATURE SELECTION METHODS"
+def IntersecOfSets(arr1, arr2, arr3):
+    s1 = set(arr1)
+    s2 = set(arr2)
+    s3 = set(arr3)
+    # Calculates intersection of
+    # sets on s1 and s2
+    set1 = s1.intersection(s2)  # [80, 20, 100]
+    # Calculates intersection of sets
+    # on set1 and s3
+    result_set = set1.intersection(s3)
+    # Converts resulting set to list
+    final_list = list(result_set)
+    return final_list
+
+
+
 
                        "3-Feature importance"""
 #3.1-Predictive Power Score
