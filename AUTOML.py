@@ -64,26 +64,32 @@ def Regression(X, y, folds):
                                           svr['test_R2-Square'].mean(),
                                           svr['test_MSE'].mean(),
                                           svr['test_MAE'].mean()],
+
                                           'LGBM Regression': [
                                               lgbm['test_R2-Square'].mean(),
                                               lgbm['test_MSE'].mean(),
                                               lgbm['test_MAE'].mean()],
+
                                           'Linear Regression': [
                                               lin['test_R2-Square'].mean(),
                                               lin['test_MSE'].mean(),
                                               lin['test_MAE'].mean()],
+
                                           'Ridge Regression': [
                                               ridge['test_R2-Square'].mean(),
                                               ridge['test_MSE'].mean(),
                                               ridge['test_MAE'].mean()],
+
                                           'Lasso Regression': [
                                               lasso['test_R2-Square'].mean(),
                                               lasso['test_MSE'].mean(),
                                               lasso['test_MAE'].mean()],
+
                                           'KNN Regression': [
                                               knn['test_R2-Square'].mean(),
                                               knn['test_MSE'].mean(),
                                               knn['test_MAE'].mean()],
+
                                           'XGB Regression': [
                                               gb['test_R2-Square'].mean(),
                                               gb['test_MSE'].mean(),
@@ -105,7 +111,66 @@ def Regression(X, y, folds):
     return (models_scores_table)
 
 #1.2 - CLASSIFICATION
+scoring = {'accuracy': make_scorer(accuracy_score),
+           'precision': make_scorer(precision_score),
+           'recall': make_scorer(recall_score),
+           'f1_score': make_scorer(f1_score)}
 
+# Instantiate the machine learning classifiers
+log_model = LogisticRegression(max_iter=10000)
+svc_model = LinearSVC(dual=False)
+dtr_model = DecisionTreeClassifier()
+rfc_model = RandomForestClassifier()
+gnb_model = GaussianNB()
+gb_model = GradientBoostingClassifier()
+
+
+# Define the models evaluation function
+def classification(X, y, folds):
+    # Perform cross-validation to each machine learning classifier
+    log = cross_validate(log_model, X, y, cv=folds, scoring=scoring)
+    svc = cross_validate(svc_model, X, y, cv=folds, scoring=scoring)
+    dtr = cross_validate(dtr_model, X, y, cv=folds, scoring=scoring)
+    rfc = cross_validate(rfc_model, X, y, cv=folds, scoring=scoring)
+    gnb = cross_validate(gnb_model, X, y, cv=folds, scoring=scoring)
+    gb = cross_validate(gb_model, X, y, cv=folds, scoring=scoring)
+
+    # Create a data frame with the models perfoamnce metrics scores
+    models_scores_table = pd.DataFrame({'Logistic Regression': [log['test_accuracy'].mean(),
+                                                                log['test_precision'].mean(),
+                                                                log['test_recall'].mean(),
+                                                                log['test_f1_score'].mean()],
+
+                                        'Support Vector Classifier': [svc['test_accuracy'].mean(),
+                                                                      svc['test_precision'].mean(),
+                                                                      svc['test_recall'].mean(),
+                                                                      svc['test_f1_score'].mean()],
+
+                                        'Decision Tree-Classifier': [dtr['test_accuracy'].mean(),
+                                                                     dtr['test_precision'].mean(),
+                                                                     dtr['test_recall'].mean(),
+                                                                     dtr['test_f1_score'].mean()],
+
+                                        'Random Forest-Classifier': [rfc['test_accuracy'].mean(),
+                                                                     rfc['test_precision'].mean(),
+                                                                     rfc['test_recall'].mean(),
+                                                                     rfc['test_f1_score'].mean()],
+
+                                        'GradientBoosting-Classifier': [gb['test_accuracy'].mean(),
+                                                                        gb['test_precision'].mean(),
+                                                                        gb['test_recall'].mean(),
+                                                                        gb['test_f1_score'].mean()],
+
+                                        'GaussianNaiveBayes-Classifier': [gnb['test_accuracy'].mean(),
+                                                                          gnb['test_precision'].mean(),
+                                                                          gnb['test_recall'].mean(),
+                                                                          gnb['test_f1_score'].mean()]},
+
+                                       index=['Accuracy', 'Precision', 'Recall', 'F1 Score'])
+    # Add 'Best Score' column
+    models_scores_table['Best Score'] = models_scores_table.idxmax(axis=1)
+    # Return models performance metrics scores data frame
+    return (models_scores_table)
 
 
 
