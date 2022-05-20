@@ -230,14 +230,10 @@ aml.leader.download_mojo(path = "./")
                                         '7-autogluon'
 BASE_DIR = '/tmp'
 OUTPUT_FILE = os.path.join(BASE_DIR, 'churn_data.csv')
-
 churn_data=urllib.request.urlretrieve('https://raw.githubusercontent.com/srivatsan88/YouTubeLI/master/dataset/WA_Fn-UseC_-Telco-Customer-Churn.csv', OUTPUT_FILE)
-
-
 size = int(0.8*churn_master_df.shape[0])
 train_df = churn_master_df[:size]
 test_df = churn_master_df[size:]
-
 
 train_data = task.Dataset(df=train_df)
 test_data = task.Dataset(df=test_df)
