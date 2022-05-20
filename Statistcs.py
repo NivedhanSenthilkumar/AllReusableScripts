@@ -69,17 +69,14 @@ stats.shapiro(aft_scr)
 # if pval> sig lvl . Ho is selected else Ha is selected
 #For proceeding to ttest the data(before and after) both should always be normal
 
-
+# Hypothesis:
+# Ho : mu of before  >=  mu of after
+# Ha : mu of before  <  mu of after
 ttstat,twosid_pval = stats.ttest_rel(bef_scr,aft_scr)
 print('T stat:',ttstat)
 print('Two sided Pval:',twosid_pval)
 print('One sided pval:',twosid_pval/2)
-
 # if pval> sig lvl . Ho is selected else Ha is selected
-
-# Hypothesis:
-# Ho : mu of before  >=  mu of after
-# Ha : mu of before  <  mu of after
 
 
 
