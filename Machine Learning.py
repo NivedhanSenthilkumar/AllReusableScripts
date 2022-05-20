@@ -312,8 +312,51 @@ model1 = VotingClassifier([('ada', r3), ('lgbm', r1),('gbc',r2)])
 model1.fit(X,Y)
 ypred=model1.predict(XTEST)
 
-                         'PERFORMANCE METRICS'
+                          'PERFORMANCE METRICS'
                           '1 - CLASSIFICATION'
+#1.1-Custom Function
+def Classificationerrormetric(model):
+                               ypred = model.predict(xtest)
+                               scorecard = pd.DataFrame({
+            'Accuracy': sklearn.metrics.accuracy_score(ytest, ypred),
+            'Area Under Curve': sklearn.metrics.roc_curve(ytest, ypred),
+            'F1': sklearn.metrics.f1_score(ytest, ypred),
+            'Recall': sklearn.metrics.recall_score(ytest, ypred),
+            'Precision': sklearn.metrics.precision_score(ytest, ypred),
+            'Log Loss': sklearn.metrics.log_loss(ytest, ypred)},
+            index=['ERROR', 'ACCURACY', 'ROC-AUC', 'F1', 'Recall', 'Precision', 'LogLoss'])
+        return scorecard.head(1)
+
+#1.2CONFUSION MATRIX
+def Confusionmatrix(actualvalue, predictedvalue):
+    cm = confusion_matrix(actualvalue, predictedvalue)
+    hm = sns.heatmap(cm)
+    return cm, hm
+
+                            '2-REGRESSION'
+def Regressionerrormetric(model):
+                               ypred = model.predict(xtest)
+                               scorecard = pd.DataFrame({
+            'Mean Absolute Error': metrics.mean_absolute_error(ytest, ypred),
+            'Mean Squared Error': metrics.mean_squared_error(ytest, ypred),
+            'Root Mean Squared Error': np.sqrt(((ypred - ytest) ** 2).mean()),
+            'Mean Absolute Percentage error': np.mean(np.abs((ytest - ypred) / ytest)) * 100,
+            'Mean Squared Log Error': metrics.mean_squared_log_error(ytest, ypred),
+            'Root Mean Square Log error': np.sqrt(metrics.mean_squared_log_error(ytest, ypred)),
+            'Overall Error': np.abs((ytest - ypred)).sum(),
+            'Overall Error Percentage': (np.abs((ytest - ypred) / (ytest)).sum()) * 100},
+            index=['ERROR', 'MAE', 'MSE', 'RMSE', 'MAPE', 'MSLE', 'RMSLE', 'OE', 'OEP'])
+        return scorecard.head(1)
+
+
+                         'General Formulas'
+mape = mean_absolute_error(Y_actual, Y_Predicted) * 100
+rmse = np.sqrt(((ypred - ytest) ** 2).mean())
+OverallError = np.abs((ytest - ypred)),
+OverallErrorPercentage = np.abs((ytest - ypred) / (ytest)) * 100
+mape = (np.mean(np.abs((actual - predicted) / actual)) * 100)
+
+#MISC
 #1.1 - LOG metrics"""
 def full_log_likelihood(w, X, y):
     score = np.dot(X, w).reshape(1, X.shape[0])
@@ -388,11 +431,6 @@ for cut_off in range(10, 100):
     # increment the value of 'i' for each row index in the dataframe 'df_total_cost'
     i += 1
 
-#Classfication Report
-def get_test_report(model):
-    test_pred = model.predict(X_test)
-    return (classification_report(y_test, test_pred))
-
 
 #Calculate TP,TN,FP,FN
 def positivenegatives(y_actual, y_hat):
@@ -412,48 +450,7 @@ def positivenegatives(y_actual, y_hat):
     return (TP, FP, TN, FN)
 
 
-#CONFUSION MATRIX
-def Confusionmatrix(actualvalue, predictedvalue):
-    cm = confusion_matrix(actualvalue, predictedvalue)
-    hm = sns.heatmap(cm)
-    return cm, hm
 
-#Custom Function
-def Classificationerrormetric(model):
-                               ypred = model.predict(xtest)
-                               scorecard = pd.DataFrame({
-            'Accuracy': sklearn.metrics.accuracy_score(ytest, ypred),
-            'Area Under Curve': sklearn.metrics.roc_curve(ytest, ypred),
-            'F1': sklearn.metrics.f1_score(ytest, ypred),
-            'Recall': sklearn.metrics.recall_score(ytest, ypred),
-            'Precision': sklearn.metrics.precision_score(ytest, ypred),
-            'Log Loss': sklearn.metrics.log_loss(ytest, ypred)},
-            index=['ERROR', 'ACCURACY', 'ROC-AUC', 'F1', 'Recall', 'Precision', 'LogLoss'])
-        return scorecard.head(1)
-
-
-                            '2-REGRESSION'
-def Regressionerrormetric(model):
-                               ypred = model.predict(xtest)
-                               scorecard = pd.DataFrame({
-            'Mean Absolute Error': metrics.mean_absolute_error(ytest, ypred),
-            'Mean Squared Error': metrics.mean_squared_error(ytest, ypred),
-            'Root Mean Squared Error': np.sqrt(((ypred - ytest) ** 2).mean()),
-            'Mean Absolute Percentage error': np.mean(np.abs((ytest - ypred) / ytest)) * 100,
-            'Mean Squared Log Error': metrics.mean_squared_log_error(ytest, ypred),
-            'Root Mean Square Log error': np.sqrt(metrics.mean_squared_log_error(ytest, ypred)),
-            'Overall Error': np.abs((ytest - ypred)).sum(),
-            'Overall Error Percentage': (np.abs((ytest - ypred) / (ytest)).sum()) * 100},
-            index=['ERROR', 'MAE', 'MSE', 'RMSE', 'MAPE', 'MSLE', 'RMSLE', 'OE', 'OEP'])
-        return scorecard.head(1)
-
-
-                         'General Formulas'
-mape = mean_absolute_error(Y_actual, Y_Predicted) * 100
-rmse = np.sqrt(((ypred - ytest) ** 2).mean())
-OverallError = np.abs((ytest - ypred)),
-OverallErrorPercentage = np.abs((ytest - ypred) / (ytest)) * 100
-mape = (np.mean(np.abs((actual - predicted) / actual)) * 100)
 
 
                               """UNSUPERVISED LEARNING""""
