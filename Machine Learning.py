@@ -114,15 +114,18 @@ print(signi_feat_rfe)
                        "3-Feature importance"""
 #3.1-Predictive Power Score
 pps.predictors(train_df, "Overall_Experience")[['x', 'y', 'ppscore']]
-pps.matrix(df) #predictive power score matrix
+matrix = pps.matrix(df) #predictive power score matrix
 
 #Predictive Powerscore Heatmap
-def heatmap(df):
+def ppsheatmap(df):
     ax = sns.heatmap(df, vmin=0, vmax=1, cmap="Blues", linewidths=0.5, annot=True)
     ax.set_title('PPS matrix')
     ax.set_xlabel('feature')
     ax.set_ylabel('target')
     return ax
+
+ppsheatmap(matrix)
+
 
 #3.2-RANKING FEATURES
 import featurewiz as FW
@@ -130,7 +133,7 @@ outputs = FW.featurewiz(dataname, target, corr_limit=0.70, verbose=2, sep=',',
 		header=0, test_data='',feature_engg='', category_encoders='',
 		dask_xgboost_flag=False, nrows=None)
 
-#3.3-FEATURE IMPORTANC PLOT (REGRESSION,CLASSIFICATION)
+#3.3-FEATURE IMPORTANCE PLOT (REGRESSION,CLASSIFICATION)
 #REGRESSION
 model = RandomForestRegressor()
 model.fit(X, y)
@@ -142,7 +145,12 @@ pyplot.show()
 important_features = pd.DataFrame({'Features': X_train_xfs.columns,'Importance': xgb_model.feature_importances_})
 fe_imp=important_features.sort_values(by='Importance',ascending=False)
 
-#CLASSIFICATION
+#Pandas Feature Importance Plot
+model = LinearRegression()
+feat_importances = pd.Series(model.feature_importances_, index=X.columns)
+feat_importances.nlargest(20).plot(kind='barh')
+
+##CLASSIFICATION
 model = RandomForestClassifier()
 model.fit(X, y)
 importance = model.feature_importances_
@@ -446,89 +454,6 @@ rmse = np.sqrt(((ypred - ytest) ** 2).mean())
 OverallError = np.abs((ytest - ypred)),
 OverallErrorPercentage = np.abs((ytest - ypred) / (ytest)) * 100
 mape = (np.mean(np.abs((actual - predicted) / actual)) * 100)
-
-
-
-
-"misc"
-# logistic regression for feature importance
-X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
-# define the model
-model = LogisticRegression()
-# fit the model
-model.fit(X, y)
-# get importance
-importance = model.coef_[0]
-# summarize feature importance
-for i,v in enumerate(importance):
-	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
-pyplot.bar([x for x in range(len(importance))], importance)
-pyplot.show()
-
-
-# decision tree for feature importance on a regression problem
-X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
-# define the model
-model = DecisionTreeRegressor()
-# fit the model
-model.fit(X, y)
-# get importance
-importance = model.feature_importances_
-# summarize feature importance
-for i,v in enumerate(importance):
-	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
-pyplot.bar([x for x in range(len(importance))], importance)
-pyplot.show()
-
-# xgboost for feature importance on a regression problem
-# define dataset
-X, y = make_regression(n_samples=1000, n_features=10, n_informative=5, random_state=1)
-# define the model
-model = XGBRegressor()
-# fit the model
-model.fit(X, y)
-# get importance
-importance = model.feature_importances_
-# summarize feature importance
-for i,v in enumerate(importance):
-	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
-pyplot.bar([x for x in range(len(importance))], importance)
-pyplot.show()
-
-
-# xgboost for feature importance on a classification problem
-# define dataset
-X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
-# define the model
-model = XGBClassifier()
-# fit the model
-model.fit(X, y)
-# get importance
-importance = model.feature_importances_
-# summarize feature importance
-for i,v in enumerate(importance):
-	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
-pyplot.bar([x for x in range(len(importance))], importance)
-pyplot.show()
-
-# decision tree for feature importance on a classification problem
-X, y = make_classification(n_samples=1000, n_features=10, n_informative=5, n_redundant=5, random_state=1)
-# define the model
-model = DecisionTreeClassifier()
-# fit the model
-model.fit(X, y)
-# get importance
-importance = model.feature_importances_
-# summarize feature importance
-for i,v in enumerate(importance):
-	print('Feature: %0d, Score: %.5f' % (i,v))
-# plot feature importance
-pyplot.bar([x for x in range(len(importance))], importance)
-pyplot.show()
 
 
                               """UNSUPERVISED LEARNING""""
