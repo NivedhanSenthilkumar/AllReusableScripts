@@ -31,48 +31,36 @@ from h2o.automl import H2OAutoML
 
 
                                   '1-INBUILT CUSTOM FUNCTION'
-                                  # Define dictionary with performance metrics
-                                  scoring = {
-                                      'R2-Square': make_scorer(r2_score),
-                                      'MSE': make_scorer(mean_squared_error),
-                                      'MAE': make_scorer(mean_absolute_error)}
+#1.1 - REGRESSION
+scoring = {'R2-Square': make_scorer(r2_score),
+         'MSE': make_scorer(mean_squared_error),
+           'MAE': make_scorer(mean_absolute_error)}
 
+# Instantiate the machine learning classifiers
+lin_model = LinearRegression()
+svr_model = SVR()
+rf_model = RandomForestRegressor()
+gb_model = GradientBoostingRegressor()
+dt_model = DecisionTreeRegressor()
+lgbm_model = LGBMRegressor()
+ridge_model = Ridge()
+lasso_model = Lasso()
+knn_model = KNeighborsRegressor()
 
+# Define the models evaluation function
+def Regression(X, y, folds):
+    lin = cross_validate(lin_model, X, y, cv=folds, scoring=scoring)
+    svr = cross_validate(svr_model, X, y, cv=folds, scoring=scoring)
+    rf = cross_validate(rf_model, X, y, cv=folds, scoring=scoring)
+    gb = cross_validate(gb_model, X, y, cv=folds, scoring=scoring)
+    dt = cross_validate(dt_model, X, y, cv=folds, scoring=scoring)
+    lgbm = cross_validate(lgbm_model, X, y, cv=folds, scoring=scoring)
+    ridge = cross_validate(ridge_model, X, y, cv=folds, scoring=scoring)
+    lasso = cross_validate(lasso_model, X, y, cv=folds, scoring=scoring)
+    knn = cross_validate(knn_model, X, y, cv=folds, scoring=scoring)
 
-                                  # Instantiate the machine learning classifiers
-                                  lin_model = LinearRegression()
-                                  svr_model = SVR()
-                                  rf_model = RandomForestRegressor()
-                                  gb_model = GradientBoostingRegressor()
-                                  dt_model = DecisionTreeRegressor()
-                                  lgbm_model = LGBMRegressor()
-                                  ridge_model = Ridge()
-                                  lasso_model = Lasso()
-                                  knn_model = KNeighborsRegressor()
-
-
-                                  # Define the models evaluation function
-                                  def Regression(X, y, folds):
-                                      '''
-                                      X : data set features
-                                      y : data set target
-                                      folds : number of cross-validation folds
-
-                                      '''
-
-                                      # Perform cross-validation to each machine learning classifier
-                                      lin = cross_validate(lin_model, X, y, cv=folds, scoring=scoring)
-                                      svr = cross_validate(svr_model, X, y, cv=folds, scoring=scoring)
-                                      rf = cross_validate(rf_model, X, y, cv=folds, scoring=scoring)
-                                      gb = cross_validate(gb_model, X, y, cv=folds, scoring=scoring)
-                                      dt = cross_validate(dt_model, X, y, cv=folds, scoring=scoring)
-                                      lgbm = cross_validate(lgbm_model, X, y, cv=folds, scoring=scoring)
-                                      ridge = cross_validate(ridge_model, X, y, cv=folds, scoring=scoring)
-                                      lasso = cross_validate(lasso_model, X, y, cv=folds, scoring=scoring)
-                                      knn = cross_validate(knn_model, X, y, cv=folds, scoring=scoring)
-
-                                      # Create a data frame with the models perfoamnce metrics scores
-                                      models_scores_table = pd.DataFrame({'SVR Regression': [
+# Create a data frame with the models perfoamnce metrics scores
+    models_scores_table = pd.DataFrame({'SVR Regression': [
                                           svr['test_R2-Square'].mean(),
                                           svr['test_MSE'].mean(),
                                           svr['test_MAE'].mean()],
@@ -88,7 +76,6 @@ from h2o.automl import H2OAutoML
                                               ridge['test_R2-Square'].mean(),
                                               ridge['test_MSE'].mean(),
                                               ridge['test_MAE'].mean()],
-
                                           'Lasso Regression': [
                                               lasso['test_R2-Square'].mean(),
                                               lasso['test_MSE'].mean(),
@@ -97,17 +84,14 @@ from h2o.automl import H2OAutoML
                                               knn['test_R2-Square'].mean(),
                                               knn['test_MSE'].mean(),
                                               knn['test_MAE'].mean()],
-
                                           'XGB Regression': [
                                               gb['test_R2-Square'].mean(),
                                               gb['test_MSE'].mean(),
                                               gb['test_MAE'].mean()],
-
                                           'DecisionTree Regression': [
                                               dt['test_R2-Square'].mean(),
                                               dt['test_MSE'].mean(),
                                               dt['test_MAE'].mean()],
-
                                           'Randomforest Regression': [
                                               rf['test_R2-Square'].mean(),
                                               rf['test_MSE'].mean(),
@@ -117,9 +101,13 @@ from h2o.automl import H2OAutoML
 
                                       # Add 'Best Score' column
                                       models_scores_table['Best Score'] = models_scores_table.idxmin(axis=1)
+    # Return models performance metrics scores data frame
+    return (models_scores_table)
 
-                                      # Return models performance metrics scores data frame
-                                      return (models_scores_table)
+#1.2 - CLASSIFICATION
+
+
+
 
 
                                   '2-AUTOSKLEARN'
