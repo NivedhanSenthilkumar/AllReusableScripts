@@ -5,7 +5,6 @@
 # Defining a function to find the statistical relationship with all the categorical variables
 def FunctionAnova(inpData, TargetVariable, ContinuousPredictorList):
     from scipy.stats import f_oneway
-
     # Creating an empty list of final selected predictors
     SelectedPredictors = []
 
@@ -56,6 +55,33 @@ CategoricalVariables=['Term', 'Grade', 'Employment Duration', 'Verification Stat
 FunctionChisq(inpData=LoanData,
               TargetVariable='Loan Status',
               CategoricalVariablesList= CategoricalVariables)
+
+                                    "T-TEST"
+                                  'Paired T-TEST'
+#STEP1 : Take shapiro test to check normality
+stats.shapiro(bef_scr)
+stats.shapiro(aft_scr)
+
+# Test of Normality - Shapiro  test
+# Ho: skew=0 (normal)
+# Ha : skew!=0 (not normal)
+
+# if pval> sig lvl . Ho is selected else Ha is selected
+#For proceeding to ttest the data(before and after) both should always be normal
+
+
+ttstat,twosid_pval = stats.ttest_rel(bef_scr,aft_scr)
+print('T stat:',ttstat)
+print('Two sided Pval:',twosid_pval)
+print('One sided pval:',twosid_pval/2)
+
+# if pval> sig lvl . Ho is selected else Ha is selected
+
+# Hypothesis:
+# Ho : mu of before  >=  mu of after
+# Ha : mu of before  <  mu of after
+
+
 
                                 """3-CORRELATION"""
 #1-PEARSON
