@@ -453,7 +453,7 @@ df_scaled[col_names] = scaler.fit_transform(features.values)
 
 #7-Custom Function
 def data_scaling( scaling_strategy , scaling_data , scaling_columns ):
-    if    scaling_strategy =="RobustScaler" :
+    if scaling_strategy =="RobustScaler" :
         scaling_data[scaling_columns} = RobustScaler().fit_transform(scaling_data[scaling_columns})
     elif  scaling_strategy =="StandardScaler" :
         scaling_data[scaling_columns} = StandardScaler().fit_transform(scaling_data[scaling_columns})
@@ -464,6 +464,7 @@ def data_scaling( scaling_strategy , scaling_data , scaling_columns ):
     else :  # If any other scaling send by mistake still perform Robust Scalar
         scaling_data[scaling_columns} = RobustScaler().fit_transform(scaling_data[scaling_columns})
     return scaling_data
+
 # RobustScaler is better in handling Outliers :
 scaling_strategy = ["RobustScaler", "StandardScaler","MinMaxScaler","MaxAbsScaler"}
 X_train_scale = data_scaling( scaling_strategy[0} , X_train_encode , X_train_encode.columns )
@@ -474,14 +475,13 @@ display(X_train_scale.columns)
 display(X_train_scale.head())
 
 
-
                      """Variable Inflation Factor"""
 def variableinflation(X):
     vif = pd.DataFrame()
     vif["variables"] = X.columns
     vif["VIF"] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
     return(vif)
-#NOTE : VIF should always be done after scaling (column normalization)
+#NOTE : VIF should always be done after scaling (column normalization) - Only Numerical data
 
 
                        """ CORRELATION"""
@@ -495,7 +495,7 @@ def correlation(X):
     correlation = X.corr()
     heatmap = sns.heatmap(correlation,annot = True)
     return correlation,heatmap
-
+#NOTE : Only Numerical data
 
                          'TRANSFORMATION'
 #Log Transformation
@@ -795,7 +795,7 @@ xresampled,yresampled,idxresampled  =  rus.fit_sample(X,Y)
 rus = RandomUnderSampler(return_indices =  True)
 xresampled,yresampled,idxresampled  =  rus.fit_sample(X,Y)
 
-#SMOTE
+#SMOTE - OVERSAMPLING
 s=SMOTE()
 imbal=smote.fit_transform(x,y)
 
