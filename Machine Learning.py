@@ -123,7 +123,6 @@ def ppsheatmap(df):
     ax.set_xlabel('feature')
     ax.set_ylabel('target')
     return ax
-
 ppsheatmap(matrix)
 
 
@@ -174,7 +173,6 @@ def visualize_importance(model, df_X, df_Y):
     fig.tight_layout()
     plt.show()
     return sorted_idx
-
 
 #5-Partial Independence Plots
 def partial_dependence(model, df_X, sorted_idx, threshold=10):
@@ -279,11 +277,9 @@ r2 = GradientBoostingRegressor(alpha=0.9, ccp_alpha=0.0, criterion='friedman_mse
                           validation_fraction=0.1, verbose=0, warm_start=False)
 r3 = AdaBoostRegressor(base_estimator=None, learning_rate=0.0005, loss='linear',
                   n_estimators=140, random_state=7685)
-
 model1 = VotingRegressor([('ada', r3), ('xgboost', r1),('gbr',r2)])
 model1.fit(X,Y)
 ypred=model1.predict(testconcat)
-
 
 #2-VOTING CLASSIFIER
 r1 = lgb.LGBMClassifier(bagging_fraction=0.9, bagging_freq=3, boosting_type='gbdt',
@@ -304,7 +300,6 @@ r2 = GradientBoostingClassifier(ccp_alpha=0.0, criterion='friedman_mse', init=No
                            random_state=6122, subsample=0.4, tol=0.0001,
                            validation_fraction=0.1, verbose=0,
                            warm_start=False)
-
 r3 = AdaBoostClassifier(algorithm='SAMME', base_estimator=None, learning_rate=0.0001,
                    n_estimators=50, random_state=6122)
 
