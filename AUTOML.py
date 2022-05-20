@@ -94,10 +94,12 @@ def Regression(X, y, folds):
                                               gb['test_R2-Square'].mean(),
                                               gb['test_MSE'].mean(),
                                               gb['test_MAE'].mean()],
+
                                           'DecisionTree Regression': [
                                               dt['test_R2-Square'].mean(),
                                               dt['test_MSE'].mean(),
                                               dt['test_MAE'].mean()],
+
                                           'Randomforest Regression': [
                                               rf['test_R2-Square'].mean(),
                                               rf['test_MSE'].mean(),
