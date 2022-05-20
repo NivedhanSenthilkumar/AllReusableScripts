@@ -349,6 +349,9 @@ print(missingdata)
 
 
                          '2.8 - Null value Dropping'
+data = data.dropna()
+
+
 # If the missing percentage of null values is greater than 40% drop those values      
 
 
