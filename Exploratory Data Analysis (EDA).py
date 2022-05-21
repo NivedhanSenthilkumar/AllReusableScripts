@@ -528,7 +528,12 @@ scaler = PowerTransformer(method = 'box-cox')
 df_scaled[col_names] = scaler.fit_transform(numdata.values)
 #NOTE-method = 'box-cox' or 'yeo-johnson''
 
+# Transform all columns
+numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
+for c in [c for c in df.columns if df[c].dtype in numerics]:
+    df[c] = np.log10(df[c])
 
+numeric_df = df.apply(lambda x: np.log10(x) if np.issubdtype(x.dtype, np.number) else x)
 
                      '2.11 - Encoding Categorical variable'
 #1 - One hot Encoding
