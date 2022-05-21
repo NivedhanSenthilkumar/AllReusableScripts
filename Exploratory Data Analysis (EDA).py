@@ -287,10 +287,10 @@ def variablesummary(x):
 
 'CATEGORICAL'
 ## VALUE - COUNTS
-for i in catdata.columns:
-    print(catdata[i].value_counts())
-for i in numdata.columns:
-    print(numdata[i].value_counts())
+def valuecounts(catdata):
+    for i in catdata.columns:
+        print(catdata[i].value_counts())
+
 
 "PIVOT TABLE"
 pd.pivot_table(df,index=["CUSTOMERNAME","ORDERID","DELIVERYDATETIME"])
