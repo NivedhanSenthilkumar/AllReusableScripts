@@ -141,29 +141,33 @@ from sklearn.tree import DecisionTreeRegressor
 from matplotlib import pyplot
 
 # Models
+## REGRESSION
+from sklearn.ensemble import AdaBoostRegressor
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import ExtraTreesRegressor
+from sklearn.linear_model import LinearRegression
+
+## CLASSIFICATION
+import lightgbm as lgb
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import AdaBoostClassifier
-from sklearn.ensemble import AdaBoostRegressor
 from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.ensemble import StackingClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm  import LinearSVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.linear_model import LogisticRegression
-from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.ensemble import ExtraTreesRegressor
+
+
 from sklearn.linear_model import OrthogonalMatchingPursuit
 from IPython.display import Image  
-from sklearn.ensemble import RandomForestClassifier
-
 
 # performance metrics
 from sklearn.metrics import make_scorer
@@ -199,6 +203,7 @@ from sklearn import tree
 
 #STACKING  MODELS
 from sklearn.ensemble import VotingRegressor
+from sklearn.ensemble import VotingClassifier
 
 ## WARNNINGS
 from warnings import filterwarnings
