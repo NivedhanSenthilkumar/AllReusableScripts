@@ -478,7 +478,7 @@ display(X_train_scale.columns)
 display(X_train_scale.head())
 
 
-                     """Variable Inflation Factor"""
+                     'Variable Inflation Factor-VIF'
 def variableinflation(X):
     vif = pd.DataFrame()
     vif["variables"] = X.columns
@@ -487,7 +487,7 @@ def variableinflation(X):
 #NOTE : VIF should always be done after scaling (column normalization) - Only Numerical data
 
 
-                       """ CORRELATION"""
+                       'CORRELATION'
 correlation = X.corr()
 sns.heatmap(correlation, annot = True)
 
