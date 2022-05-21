@@ -377,7 +377,7 @@ test["education"} = test["education"}.ffill(axis = 0)
 test["education"} = test["education"}.bfill(axis = 0)
 
 
-                                      """ OUTLIERS"""
+                                      'OUTLIERS'
 #1-Fix Outlier Range
 q1 = df.quantile(0.25)
 q3 = df.quantile(0.75)
@@ -394,9 +394,9 @@ pd.DataFrame(((df_num < extreme_lower_range) | (df_num > extreme_upper_range)).s
 #3-Find Percentage of Outliers
 pd.DataFrame(((df_num < extreme_lower_range) | (df_num > extreme_upper_range)).sum(),
              columns = ['No. of Outliers']).sort_values(by = 'No. of Outliers', ascending = False) / len(df)
+#NOTE : Outlier treatment is for numerical data
 
-
-'Outlier Treatment'
+                                 'Outlier Treatment'
 #1-Capping (Winzorization)
 for i in numdata.columns:
     q1 = numdata[i].quantile(0.25)
