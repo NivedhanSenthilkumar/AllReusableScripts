@@ -1,16 +1,6 @@
 
 
-#Wordcloud(pdf)
-import pdfplumber
-import nltk
-from nltk.corpus import stopwords
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud
-from PIL import Image
-import os
-import argparse
+
 
 
 #Using loops to iterate through nested dictionary/list python
