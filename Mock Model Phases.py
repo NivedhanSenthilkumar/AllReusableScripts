@@ -41,9 +41,51 @@ Percent = (concat.isnull().sum()*100/len(concat)).sort_values(ascending=False)
 Missingdata = pd.concat([Total, Percent], axis = 1, keys = ['Total', 'Percentage of Missing Values'])
 Missingdata
 
-
 #Dropping Columns based on Null
 df = df.drop(['Consumer disputed?'],axis=1)
+
+
+                                "STATISTICAL TESTS"
+#1-Numerical Data
+numdata.corr()
+
+#2-Categorical data with categorical data
+#2.1-CHISQUARE TEST
+def FunctionChisq(inpData, TargetVariable, CategoricalVariablesList):
+    from scipy.stats import chi2_contingency
+
+    # Creating an empty list of final selected predictors
+    SelectedPredictors = []
+
+    for predictor in CategoricalVariablesList:
+        CrossTabResult = pd.crosstab(index=inpData[TargetVariable], columns=inpData[predictor])
+        ChiSqResult = chi2_contingency(CrossTabResult)
+
+        # If the ChiSq P-Value is <0.05, that means we reject H0
+        if (ChiSqResult[1] < 0.05):
+            print(predictor, 'is correlated with', TargetVariable, '| P-Value:', ChiSqResult[1])
+            SelectedPredictors.append(predictor)
+        else:
+            print(predictor, 'is NOT correlated with', TargetVariable, '| P-Value:', ChiSqResult[1])
+    return (SelectedPredictors)
+
+CategoricalVariables= ['Product', 'Sub-product', 'Issue', 'Sub-issue', 'Company',
+       'Consumer consent provided?', 'Submitted via', 'Timely response?',
+      'Duration',
+       'Regions']
+# Calling the function
+FunctionChisq(inpData=df,
+              TargetVariable='Company response to consumer',
+              CategoricalVariablesList= CategoricalVariables)
+
+#2.2-ANOVA TEST
+
+
+
+
+
+
+
 
 
 
