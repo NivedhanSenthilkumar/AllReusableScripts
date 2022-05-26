@@ -1,5 +1,5 @@
 
-"JP PIMPORT LIBRARIES"
+"IMPORT LIBRARIES"
 from sklearn.metrics import make_scorer
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import r2_score
