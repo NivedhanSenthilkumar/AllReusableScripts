@@ -39,10 +39,13 @@ def valuecounts(catdata):
 Total = concat.isnull().sum().sort_values(ascending=False)
 Percent = (concat.isnull().sum()*100/len(concat)).sort_values(ascending=False)
 Missingdata = pd.concat([Total, Percent], axis = 1, keys = ['Total', 'Percentage of Missing Values'])
-Missingdata
 
 #Dropping Columns based on Null
 df = df.drop(['Consumer disputed?'],axis=1)
+
+
+#Imputation
+
 
 
                                 "STATISTICAL TESTS"
@@ -86,7 +89,54 @@ FunctionChisq(inpData=df,
 
 
 
+                                "BASE MODEL BUILDING"
+#1-REGRESSION
 
+
+
+
+
+#2-CLASSIFICATION
+
+
+
+
+
+
+
+                                  "FEATURE SELECTION"
+#1-BACKWARD ELIMINATION
+linreg = LinearRegression()
+linreg_forward = sfs(estimator=linreg, k_features = 'best', forward=False,
+                     verbose=2, scoring='r2')
+sfs_forward = linreg_forward.fit(X_train, y_train)
+
+# print the selected feature names when k_features = (5, 15)
+print('Features selelected using forward selection are: ')
+print(sfs_forward.k_feature_names_)
+# print the R-squared value
+print('\nR-Squared: ', sfs_forward.k_score_)
+
+
+#2-FORWARD SELECTION
+linreg = LinearRegression()
+linreg_forward = sfs(estimator=linreg, k_features = 'best', forward=True,
+                     verbose=2, scoring='r2')
+sfs_forward = linreg_forward.fit(X_train, y_train)
+
+# print the selected feature names when k_features = (5, 15)
+print('Features selelected using forward selection are: ')
+print(sfs_forward.k_feature_names_)
+# print the R-squared value
+print('\nR-Squared: ', sfs_forward.k_score_)
+
+#RECURSIVE FEATURE ELIMINATION
+linreg_rfe = LinearRegression()
+rfe_model = RFE(estimator=linreg_rfe, n_features_to_select = 12)
+rfe_model = rfe_model.fit(X_train, y_train)
+feat_index = pd.Series(data = rfe_model.ranking_, index = X_train.columns)
+signi_feat_rfe = feat_index[feat_index==1].index #(Select features with rank =1)
+print(signi_feat_rfe)
 
 
 
