@@ -232,9 +232,15 @@ print(signi_feat_rfe)
 
 
 
+                                      "HYPER TUNING"
+
+
+
+
 
 
                                 "HYPER TUNED MODEL BUILDING"
+#Note : We will build hypertuned top 5 models
 
 
 
@@ -245,7 +251,6 @@ print(signi_feat_rfe)
 
                                 "ENSEMBLE COMBINATIONS"
 #1-Randomforest with Adaboost and Gradient Boosting
-from sklearn.ensemble import VotingRegressor
 r1 = AdaBoostRegressor()
 r2 = RandomForestRegressor()
 r3 =  GradientBoostingRegressor()
@@ -254,29 +259,33 @@ model1.fit(xtrain,ytrain)
 prediction1 = model1.predict(xtest)
 
 #2-Extra trees with lightgbm
-from lightgbm import LGBMRegressor
-from sklearn.ensemble import ExtraTreesRegressor
 r1 = ExtraTreesRegressor()
 r2 = LGBMRegressor()
 model2 = VotingRegressor([('lightgbm', r2), ('ExtraTrees', r1)])
 model2.fit(xtrain,ytrain)
 prediction2 = model2.predict(xtest)
 
-#3-ALL TREES MODEL
+#3-ALL TREES MODEL(BAGGING)
 r1 = ExtraTreesRegressor()
 r2 = RandomForestRegressor()
-model4 = VotingRegressor([('et', r1), ('rf', r2)])
-model4.fit(xtrain,ytrain)
-prediction4 = model4.predict(xtest)
+model3 = VotingRegressor([('et', r1), ('rf', r2)])
+model3.fit(xtrain,ytrain)
+prediction3 = model3.predict(xtest)
 
-#4- All boosting models
-from xgboost import XGBRegressor
+#4- All boosting models(BOOSTING)
 r1 = AdaBoostRegressor()
 r2 = XGBRegressor()
 r3 =  GradientBoostingRegressor()
-model3 = VotingRegressor([('ada', r1), ('XGBRegressor', r2),('xgboost', r3)])
-model3.fit(xtrain,ytrain)
-prediction3 = model3.predict(xtest)
+model4 = VotingRegressor([('ada', r1), ('XGBRegressor', r2),('gbr', r3)])
+model4.fit(xtrain,ytrain)
+prediction4 = model4.predict(xtest)
+
+#5- RF with XGB
+r1 = RandomForestRegressor()
+r2 = XGBRegressor()
+model5 = VotingRegressor([('rf', r1), ('XGBRegressor', r2)])
+model5.fit(xtrain,ytrain)
+prediction5 = model5.predict(xtest)
 
 
                                   'EVALUATION METRICS'
@@ -303,7 +312,7 @@ d = Regressionerrormetric(model4)
 #1.2-FINAL EVALUATION DATAFRAME
 Experiments = pd.DataFrame()
 Experiments = pd.concat([a,b,c,d,e],axis=0)
-Experiments['ModelName'] = ['RF,Adaboost,GBR','Extra trees with lightgbm','Bagging','Boosting']
+Experiments['ModelName'] = ['RF,Adaboost,GBR','Extra trees with lightgbm','Bagging','Boosting','RF,XGB']
 
 
 
