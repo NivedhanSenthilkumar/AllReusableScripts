@@ -50,6 +50,14 @@ df = model.fit_transform(X, y)
 pred = model.predict(X_test)
 print("Final R^2: %.4f" % model.score(df, y))
 
+                               'FEATURE WEIGHTS'
+#1-DECISION TREE
+dt = DecisionTreeClassifier(max_depth=3)
+dt.fit(X_train, y_train)
+from sklearn import tree
+fig = plt.figure(figsize=(25,20))
+_ = tree.plot_tree(dt,feature_names=X.columns,class_names=['No Disease', "Disease"],filled=True)
+
 
                               '2-FEATURE SELECTION'
 #FORWARD SELECTION
@@ -115,17 +123,13 @@ def IntersecOfSets(arr1, arr2, arr3):
     s1 = set(arr1)
     s2 = set(arr2)
     s3 = set(arr3)
-    # Calculates intersection of
-    # sets on s1 and s2
+
     set1 = s1.intersection(s2)  # [80, 20, 100]
-    # Calculates intersection of sets
-    # on set1 and s3
     result_set = set1.intersection(s3)
     # Converts resulting set to list
     final_list = list(result_set)
     return final_list
 
-.
 
 
                        "3-Feature importance"""
@@ -324,6 +328,7 @@ model1 = VotingClassifier([('ada', r3), ('lgbm', r1),('gbc',r2)])
 model1.fit(X,Y)
 ypred=model1.predict(XTEST)
 
+
                           'PERFORMANCE METRICS'
                           '1 - CLASSIFICATION'
 #1.1-Custom Function
@@ -359,6 +364,36 @@ def Regressionerrormetric(model):
             'Overall Error Percentage': (np.abs((ytest - ypred) / (ytest)).sum()) * 100},
             index=['ERROR', 'MAE', 'MSE', 'RMSE', 'MAPE', 'MSLE', 'RMSLE', 'OE', 'OEP'])
         return scorecard.head(1)
+
+
+                                 'VISUAL EVALUATION'
+#1-LINEAR LINE
+plt.figure(figsize=(10,10))
+plt.scatter(true_value, predicted_value, c='crimson')
+plt.yscale('log')
+plt.xscale('log')
+p1 = max(max(predicted_value), max(true_value))
+p2 = min(min(predicted_value), min(true_value))
+plt.plot([p1, p2], [p1, p2], 'b-')
+plt.xlabel('True Values', fontsize=15)
+plt.ylabel('Predictions', fontsize=15)
+plt.axis('equal')
+plt.show()
+
+#2-ACTUAL vs PREDICTED(REGRESSION)
+plt.figure(figsize=(10,5))
+x = np.arange(1,7,1) #(total samples is 1000, instead of 7 replace with 1001)
+y1 = y_test
+y2 = y_pred
+plt.title('ACTUAL vs PREDICTED')
+plt.plot(x,y1, "b-" , label = 'ACTUAL') # Setting up legends
+plt.plot(x,y2, "r-" ,label ='PREDICTED') # Setting up legends
+plt.xlabel("Number of Samples")
+plt.ylabel("RESIDUALS")
+plt.legend()
+plt.tight_layout()
+plt.show()
+
 
 
                          'General Formulas'
