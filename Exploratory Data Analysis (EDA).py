@@ -145,8 +145,10 @@ from matplotlib import pyplot
 from sklearn.ensemble import AdaBoostRegressor
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.ensemble import ExtraTreesRegressor
+from xgboost import XGBRegressor
 from sklearn.linear_model import LinearRegression
+from lightgbm import LGBMRegressor
+from sklearn.ensemble import ExtraTreesRegressor
 
 ## CLASSIFICATION
 import lightgbm as lgb
