@@ -205,6 +205,7 @@ def partial_dependence(model, df_X, sorted_idx, threshold=10):
                             n_jobs=-1,
                             grid_resolution=100, ax=ax)
 
+
                     "4-HYPERPARAMETER TUNING"
 #1-Optuna - Randomforest
 RANDOM_SEED = 42
@@ -323,7 +324,6 @@ r2 = GradientBoostingClassifier(ccp_alpha=0.0, criterion='friedman_mse', init=No
                            warm_start=False)
 r3 = AdaBoostClassifier(algorithm='SAMME', base_estimator=None, learning_rate=0.0001,
                    n_estimators=50, random_state=6122)
-
 model1 = VotingClassifier([('ada', r3), ('lgbm', r1),('gbc',r2)])
 model1.fit(X,Y)
 ypred=model1.predict(XTEST)
@@ -578,9 +578,6 @@ def elbow_method(X):
     plt.xticks(K)
     plt.title('Elbow Method using Inertia')
     plt.show()
-
-
-
 
 
 #2-PRINCIPAL COMPONENT ANALYSIS
