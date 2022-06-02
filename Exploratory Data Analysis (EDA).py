@@ -395,6 +395,22 @@ test["education"} = test["education"}.ffill(axis = 0)
 #5-Backward Fill
 test["education"} = test["education"}.bfill(axis = 0)
 
+                                'Extracting Month,Year,Day from Date'
+
+def process_date_time(data_df):
+                               data_df['date'] = data_df['date'].astype(str)
+                               data_df["date"] = data_df["date"].apply(lambda x: x[:4] + "-" + x[4:6] + "-" + x[6:])
+                               data_df["date"] = pd.to_datetime(data_df["date"])
+                               data_df["year"] = data_df['date'].dt.year
+                               data_df["month"] = data_df['date'].dt.month
+                               data_df["day"] = data_df['date'].dt.day
+                               data_df["weekday"] = data_df['date'].dt.weekday
+                               data_df['weekofyear'] = data_df['date'].dt.weekofyear
+                               data_df['month.unique.user.count'] = data_df.groupby('month')['fullVisitorId'].transform('nunique')
+                               data_df['day.unique.user.count'] = data_df.groupby('day')['fullVisitorId'].transform('nunique')
+                               data_df['weekday.unique.user.count'] = data_df.groupby('weekday')['fullVisitorId'].transform('nunique')
+                               return data_df
+
 
                                       'OUTLIERS'
 #1-Fix Outlier Range
