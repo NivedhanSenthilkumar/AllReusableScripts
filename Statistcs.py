@@ -56,6 +56,27 @@ FunctionChisq(inpData=LoanData,
               TargetVariable='Loan Status',
               CategoricalVariablesList= CategoricalVariables)
 
+# Separating Numerical and Categorical features to conduct respective test
+df_hypo_num = df_Hypothesis.select_dtypes(include = np.number).drop('Loan/No Loan',axis=1)
+df_hypo_cat = df_Hypothesis.select_dtypes(include ='O')
+
+# categorical vs target
+# chi-square test for independence of attributes:
+#   H0: variables are independent
+#   H1: variables are dependent
+
+c_pvals = []
+for i in df_hypo_cat.columns:
+    obs = pd.crosstab(df_hypo_cat[i], df_train_cleaned['Loan/No Loan'])
+    stat, pval, dof, exp = st.chi2_contingency(obs)
+    c_pvals.append(pval)
+
+pd.DataFrame({'Features': df_hypo_cat.columns, 'p_value': c_pvals})
+# All p_values < 0.05(alpha), Rejecting Null Hypothesis, so all the categorical features have some relationship with Target Variable
+
+
+
+
                                     "T-TEST"
                                   'Paired T-TEST'
 #STEP1 : Take shapiro test to check normality
@@ -77,6 +98,23 @@ print('T stat:',ttstat)
 print('Two sided Pval:',twosid_pval)
 print('One sided pval:',twosid_pval/2)
 # if pval> sig lvl . Ho is selected else Ha is selected
+
+
+                              # numerical vs target
+                              # Two tailed Two-Sample T-Test:
+                              #   H0: mean1 = mean2
+                              #   H1: mean1 !=mean2
+
+n_pvals = []
+for i in df_hypo_num.columns:
+    a = df_train_cleaned[df_train_cleaned['Loan/No Loan'] == 0][i]
+    b = df_train_cleaned[df_train_cleaned['Loan/No Loan'] == 1][i]
+    tstat, pval = st.ttest_ind(a, b)
+    n_pvals.append(pval)
+
+pd.DataFrame({'Features': df_hypo_num.columns, 'p_value': n_pvals})
+# All p_values < 0.05(alpha), Rejecting Null Hypothesis, so all the Numerical features have some relationship with Target Variable
+
 
 
 
