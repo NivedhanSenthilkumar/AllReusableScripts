@@ -695,6 +695,17 @@ def visual(X):
     scatterplot = sns.scatterplot(X.columns)
     return distplot,scatterplot
 
+# RelationShip of Numerical features with Target features
+for i in df_train_num.columns:
+    f, (ax1, ax2) = plt.subplots(2, 1, figsize=(15,8))
+
+    ax1.hist(df_train_num[i][df_train['Loan/No Loan'] == 1], color = 'deeppink')
+    ax1.set(xlabel = 'Default', ylabel=i)
+
+    ax2.hist(df_train_num[i][df_train['Loan/No Loan'] == 0], color = 'deepskyblue')
+    ax2.set(xlabel = 'Non-Default', ylabel=i)
+
+
 ----------------- ALITER------------------------------------------------------------------------------------
 row = 3
 col = 1
