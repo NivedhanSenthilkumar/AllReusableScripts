@@ -21,6 +21,46 @@ print('slope:', model.coef_)
 
 
 
+#Finding the best threshold
+# User defined function for finding the best threshold using Youdens Index
+def find_best_threshold(model,X_ind,y_dep):
+  # Retrieving Probability
+  y_train_pred_prob = model.predict_proba(X_ind)
+  y_train_pred_prob = y_train_pred_prob[:,1]
+
+  # Plotting ROC AUC Score
+  fpr,tpr,threshold = metrics.roc_curve(y_dep,y_train_pred_prob)
+
+  # create a dataframe to store the values for false positive rate, true positive rate and threshold
+  youdens_table = pd.DataFrame({'TPR': tpr,
+                             'FPR': fpr,
+                             'Threshold': threshold})
+
+  # calculate the difference between TPR and FPR for each threshold and store the values in a new column 'Difference'
+  youdens_table['Difference'] = youdens_table.TPR - youdens_table.FPR
+
+  # sort the dataframe based on the values of difference
+  # 'ascending = False' sorts the data in descending order
+  # 'reset_index' resets the index of the dataframe
+  # 'drop = True' drops the previous index
+  youdens_table = youdens_table.sort_values('Difference', ascending = False).reset_index(drop = True)
+
+  # print the first five observations
+  print(youdens_table.head())
+  threshold = youdens_table.iloc[0,2]
+  print('\n\n')
+  print('Best Threshold where MAX(TPR - FPR ) is higher :',threshold)
+  print('\n\n')
+  # Max(TPR - FPR) would be taken
+
+  # Making 0 if prob < 0.152263 else 1
+  y_train_pred = [0 if x < threshold else 1 for x in y_train_pred_prob]
+
+  # Displaying classification report for traning data
+  print('Classification Report for best Threshold :\n')
+  print(metrics.classification_report(y_dep,y_train_pred))
+
+
 
 
                            """"SUPERVISED LEARNING"""
@@ -351,6 +391,25 @@ def Confusionmatrix(actualvalue, predictedvalue):
     hm = sns.heatmap(cm)
     return cm, hm
 
+#1.3-R0C:AUC CURVE
+    def plot_roc_curve(model, X_ind, y_dep):
+        # Retrieving Probability
+        y_train_pred_prob = model.predict_proba(X_ind)
+        y_train_pred_prob = y_train_pred_prob[:, 1]
+
+        # Plotting ROC AUC Score
+        fpr, tpr, threshold = metrics.roc_curve(y_dep, y_train_pred_prob)
+
+        plt.plot(fpr, tpr)
+        plt.plot([0, 1], [0, 1], 'k--')
+        plt.xlabel('FPR')
+        plt.ylabel('TPR')
+        plt.title('ROC AUC Score')
+        plt.show()
+
+        print('ROC AUC SCORE :', metrics.roc_auc_score(y_dep, y_train_pred_prob))
+
+
                             '2-REGRESSION'
 def Regressionerrormetric(model):
                                ypred = model.predict(xtest)
@@ -375,7 +434,6 @@ def fit_model(train_X, train_Y, window_size=1):
                                 model.compile(loss="mean_squared_error",optimizer="adam")
                                 model.fit(train_X,train_Y,epochs=5,batch_size=1,verbose=2)
                                 return (model)
-
 
 
                                  'VISUAL EVALUATION'
