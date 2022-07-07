@@ -205,6 +205,13 @@ pyplot.show()
 important_features = pd.DataFrame({'Features': X_train_xfs.columns,'Importance': xgb_model.feature_importances_})
 fe_imp=important_features.sort_values(by='Importance',ascending=False)
 
+# Finding the Best Features
+dt_best_features = pd.DataFrame()
+dt_best_features['Features'] = X[best_features_list].columns
+dt_best_features['scores'] = dt_best.feature_importances_
+dt_best_features = dt_best_features.sort_values(by='scores',ascending=False)
+print(dt_best_features)
+
 #Pandas Feature Importance Plot
 model = LinearRegression()
 feat_importances = pd.Series(model.feature_importances_, index=X.columns)
