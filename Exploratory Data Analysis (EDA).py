@@ -250,6 +250,15 @@ catdata = data.select_dtypes(exclude = np.number)
 catdata = ipl.loc[:,['Team','Tournament','Player']]
 numdata = ipl[ipl.columns.difference(['Team','Tournament','Player'])]
 
+#Method 3
+cat = []
+con = []
+for i in X.columns:
+    if (X[i].dtypes == "object"):
+        cat.append(i)
+    else:
+        con.append(i)
+
 'Datatype Conversion'
 for i in numdata:
     numdata[i] = numdata[i].astype('float')
