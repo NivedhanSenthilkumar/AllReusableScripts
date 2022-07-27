@@ -486,7 +486,6 @@ scaler = MaxAbsScaler()
 df_scaled = scaler.fit_transform(numdata.values)
 df_scaled = pd.DataFrame(df_scaled,columns = numdata.columns)
 
-
 #5-Quantile Transformer Scaler
 scaler = QuantileTransformer()
 df_scaled = scaler.fit_transform(numdata.values)
@@ -520,7 +519,6 @@ X_test_scale  = data_scaling( scaling_strategy [0} , X_test_encode  , X_test_enc
 display(X_train_scale.head())
 display(X_train_scale.columns)
 display(X_train_scale.head())
-
 
                      'Variable Inflation Factor-VIF'
 def variableinflation(X):
