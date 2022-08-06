@@ -14,6 +14,11 @@ import torch.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from keras.models import Sequential
+from keras.layers import Dense,Dropout
+from keras.callbacks import EarlyStopping
+from keras.models import Sequential
+from keras.layers import LSTM,Dense,Dropout
 
                                "1-CLASSIFICATION"
                             "1.1-BINARY CLASSIFICATION"
@@ -41,11 +46,28 @@ def baseline_model():
                                                  metrics=['accuracy'])
     return model
 
-
 estimator = KerasClassifier(build_fn=baseline_model, epochs=200, batch_size=5, verbose=0)
 kfold = KFold(n_splits=10, shuffle=True)
 results = cross_val_score(estimator, X, dummy_y, cv=kfold)
 print("Baseline: %.2f%% (%.2f%%)" % (results.mean() * 100, results.std() * 100))
+
+
+## 2 - NEURAL NETWORK
+nn = Sequential()
+nn.add(Dense(200,input_dim=(Xnew.shape[1])))
+nn.add(Dense(200))
+nn.add(Dropout(0.2))
+nn.add(Dense(200))
+nn.add(Dropout(0.2))
+nn.add(Dense(200))
+nn.add(Dropout(0.2))
+nn.add(Dense(1,activation="sigmoid"))
+
+nn.compile(loss="binary_crossentropy",metrics=["accuracy"])
+nn.fit(xtrain,ytrain,validation_split=0.2,batch_size=4,epochs=100)
+
+
+
 
 
                                 "2-REGRESSION"
@@ -172,3 +194,12 @@ with torch.no_grad():
 
                               """RECOMMENDATION SYSTEMS"""
 
+
+                            """TIME SERIES FORECASTING"""
+nn = Sequential()
+nn.add(LSTM(50,return_sequences=True,input_shape=(50,1)))
+nn.add(LSTM(100,return_sequences=True))
+nn.add(Dense(1))
+
+nn.compile(optimizer="adam",loss="mean_squared_error")
+nn.fit(xtr,ytr,epochs=10)
