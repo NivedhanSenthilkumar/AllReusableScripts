@@ -21,7 +21,7 @@ from keras.models import Sequential
 from keras.layers import LSTM,Dense,Dropout
 
                                "1-CLASSIFICATION"
-                            "1.1-BINARY CLASSIFICATION"
+                            ##1.1-BINARY CLASSIFICATION
 # define the keras model
 model = Sequential()
 model.add(Dense(12, input_dim=8, activation='relu'))
@@ -35,7 +35,7 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 model.fit(X, y, epochs=150, batch_size=10)
 
 
-                                "1.1-MULTICLASS CLASSIFICATION"
+                                #1.2-MULTICLASS CLASSIFICATION
 #BUILDING MODEL
 def baseline_model():
     model = Sequential()
@@ -88,7 +88,7 @@ predictions = model.predict(to_predict)
 model.evaluate(X_test_scaled, y_test)
 
 
-                            "KERAS REGRESSOR"
+                            ## 2-KERAS REGRESSOR
 #BUILDING MODEL
 def BuildModel():
  model = Sequential()
@@ -105,7 +105,7 @@ regressor.fit(x,y)
 ypred = regressor.predict(x)
 
 
-                            "PYTORCH REGRESSION"
+                            ## 3-PYTORCH REGRESSION
 N = 1000
 X = np.random.random((N, 2)) * 6 - 3  # uniformly distributed between (-3, +3)
 Y = np.cos(2 * X[:, 0]) + np.cos(3 * X[:, 1])
@@ -195,7 +195,7 @@ with torch.no_grad():
                               """RECOMMENDATION SYSTEMS"""
 
 
-                            """TIME SERIES FORECASTING"""
+                             """TIME SERIES FORECASTING"""
 nn = Sequential()
 nn.add(LSTM(50,return_sequences=True,input_shape=(50,1)))
 nn.add(LSTM(100,return_sequences=True))
