@@ -77,8 +77,8 @@ pd.DataFrame({'Features': df_hypo_cat.columns, 'p_value': c_pvals})
 
 
 
-                                    "T-TEST"
-                                  'Paired T-TEST'
+                                    "3-T-TEST"
+                                  '3.1Paired T-TEST'
 #STEP1 : Take shapiro test to check normality
 stats.shapiro(bef_scr)
 stats.shapiro(aft_scr)
