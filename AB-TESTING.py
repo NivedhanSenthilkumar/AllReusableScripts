@@ -1,5 +1,5 @@
 
-"""LIBRARIES"""
+                                                      """LIBRARIES"""
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -28,7 +28,7 @@ print("- Contingency table:")
 display(df)
 
 
-                            1.1 """Fisher's exact test"""
+                            "1.1 - Fisher's exact test"""
 #Since we have a 2x2 contingency table we can use Fisher's exact test to compute an exact p-value and test our hypothesis.
 def hypergeom(k, K, n, N):
     """Probability mass funciton of the hypergeometric distribution."""
