@@ -137,3 +137,5 @@ model.get_leaderboard()
 model.plot_cv_scores()
 
 future_predictions = model.predict(testdata=219)
+
+import pycaret
