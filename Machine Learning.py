@@ -681,8 +681,8 @@ def elbow_method(X):
 
 
 
-                              ## TIME SERIES FORECASTING
-
+                              """TIME SERIES FORECASTING"""
+arima = arima.fit()
 
 
 
