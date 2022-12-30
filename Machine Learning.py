@@ -693,9 +693,3 @@ arima = arima.fit()
 
 
 
-
-
-
-
-
-                      
