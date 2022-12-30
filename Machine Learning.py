@@ -686,8 +686,11 @@ arima = arima.fit()
 
 
 
-
-
+"""DECISION TREE DIAGRAM"""
+fig = plt.figure(figsize=(25,20))
+fn=['pH','Temprature','Taste','Odor','Fat','Turbidity','Colour']
+cn=['high','low','medium']
+tree.plot_tree(dc,filled=True,feature_names=fn,class_names=cn)
 
 
 
