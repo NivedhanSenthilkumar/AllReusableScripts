@@ -252,6 +252,13 @@ def partial_dependence(model, df_X, sorted_idx, threshold=10):
                             n_jobs=-1,
                             grid_resolution=100, ax=ax)
 
+##6 - Decision Tree Diagram
+"""DECISION TREE DIAGRAM"""
+fig = plt.figure(figsize=(25,20))
+fn=['pH','Temprature','Taste','Odor','Fat','Turbidity','Colour']
+cn=['high','low','medium']
+tree.plot_tree(dc,filled=True,feature_names=fn,class_names=cn)
+
 
                     "4-HYPERPARAMETER TUNING"
 #1-Optuna - Randomforest
@@ -686,11 +693,7 @@ arima = arima.fit()
 
 
 
-"""DECISION TREE DIAGRAM"""
-fig = plt.figure(figsize=(25,20))
-fn=['pH','Temprature','Taste','Odor','Fat','Turbidity','Colour']
-cn=['high','low','medium']
-tree.plot_tree(dc,filled=True,feature_names=fn,class_names=cn)
+
 
 
 
