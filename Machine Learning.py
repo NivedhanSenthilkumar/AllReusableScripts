@@ -253,7 +253,6 @@ def partial_dependence(model, df_X, sorted_idx, threshold=10):
                             grid_resolution=100, ax=ax)
 
 ##6 - Decision Tree Diagram
-"""DECISION TREE DIAGRAM"""
 fig = plt.figure(figsize=(25,20))
 fn=['pH','Temprature','Taste','Odor','Fat','Turbidity','Colour']
 cn=['high','low','medium']
@@ -605,7 +604,7 @@ def positivenegatives(y_actual, y_hat):
 
 
                               """UNSUPERVISED LEARNING""""
-#1-K-MEANS CLUSTERING
+                                 '1-K-MEANS CLUSTERING'
 df_scaled = df2.apply(zscore)
 #NOTE : (For Kmeans scaling is a must)
 
